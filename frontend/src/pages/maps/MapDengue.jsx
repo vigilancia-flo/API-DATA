@@ -31,11 +31,11 @@ import santaCruz from "../../assets/ubs/santacruz.png";
 import ubsFloriano from "../../assets/ubs/ubsfloriano.jpg";
 import dirceuArcoverde from "../../assets/ubs/dirceuarcoverde.png";
 import joseParaguassu from "../../assets/ubs/joseparaguassu.jpg";
-import TheodoroSobral from "../../assets/ubs/TheodoroSobral.png";
 import pedroSimplicio from "../../assets/ubs/pedroSimplicio.jpg";
 import alfedroCarvalho from "../../assets/ubs/alfredoCarvalho.jpg";
 import defaultImage from "../../assets/ubs/defaultImage.png";
 import RaimundoFilho from "../../assets/ubs/ubsRaimundoFilho.png";
+import TheodoroSobral from "../../assets/ubs/TheodoroSobral.jpg";
 // imagens das ubs do perimetro rural
 import MargaridaAlvez from "../../assets/ubs/MargaridaAlvez.jpeg";
 import RaimundoBenvindoLima from "../../assets/ubs/RaimundoBenvindoLima.jpeg";
