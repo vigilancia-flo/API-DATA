@@ -23,15 +23,14 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden bg-gradient-to-b from-[#eef4f8] via-[#f7f9fb] to-[#eef4f8]">
-      {/* Particulas de fundo - Alterado para type="custom" para usar suas cores */}
-      <ParticlesBg
-        type="custom"
-        bg={true}
-        className="z-0 opacity-70"
-        config={configParticulas}
-      />
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative overflow-hidden">
+      {/* Camada 1: Fundo Gradiente (Atrás das partículas) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#eef4f8] via-[#f7f9fb] to-[#eef4f8] -z-20"></div>
 
+      {/* Camada 2: Partículas (O bg={true} joga automaticamente para z-index: -1) */}
+      <ParticlesBg type="custom" bg={true} config={configParticulas} />
+
+      {/* Camada 3: Conteúdo (z-10 garante que fique acima de tudo) */}
       <div className="max-w-3xl w-full bg-white/75 backdrop-blur-2xl rounded-3xl shadow-2xl p-8 sm:p-10 md:p-14 text-center space-y-8 border border-white/60 relative z-10 animate-in fade-in zoom-in-95 duration-700">
         <div className="flex flex-col items-center gap-6">
           <img
