@@ -31,7 +31,7 @@ import santaCruz from "../../assets/ubs/santacruz.png";
 import ubsFloriano from "../../assets/ubs/ubsfloriano.jpg";
 import dirceuArcoverde from "../../assets/ubs/dirceuarcoverde.png";
 import joseParaguassu from "../../assets/ubs/joseparaguassu.jpg";
-import theodoroSobral from "../../assets/ubs/TheodoroSobral.jpg";
+import TheodoroSobral from "../../assets/ubs/TheodoroSobral.jpg";
 import pedroSimplicio from "../../assets/ubs/pedroSimplicio.jpg";
 import alfedroCarvalho from "../../assets/ubs/alfredoCarvalho.jpg";
 import defaultImage from "../../assets/ubs/defaultImage.png";
@@ -1931,7 +1931,7 @@ const marcadores = [
     reviews: 2,
     hours: "07:00 AM - 5:00 PM",
     color: "#8b5cf6",
-    image: theodoroSobral,
+    image: TheodoroSobral,
     lng: -43.020540939559325,
     lat: -6.778873054851179,
   },
