@@ -31,7 +31,7 @@ import santaCruz from "../../assets/ubs/santacruz.png";
 import ubsFloriano from "../../assets/ubs/ubsfloriano.jpg";
 import dirceuArcoverde from "../../assets/ubs/dirceuarcoverde.png";
 import joseParaguassu from "../../assets/ubs/joseparaguassu.jpg";
-import theodoroSobral from "../../assets/ubs/theodoroSobral.jpg";
+import theodoroSobral from "../../assets/ubs/TheodoroSobral.jpg";
 import pedroSimplicio from "../../assets/ubs/pedroSimplicio.jpg";
 import alfedroCarvalho from "../../assets/ubs/alfredoCarvalho.jpg";
 import defaultImage from "../../assets/ubs/defaultImage.png";
