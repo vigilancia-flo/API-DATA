@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Layers, Sun, Moon, AlertTriangle, Activity } from "lucide-react";
 import "maplibre-gl/dist/maplibre-gl.css";
-import Sidebar from "../components/sidebar.jsx";
+import Sidebar from "../components/Sidebar.jsx";
 import EndemiaFilter from "../components/EndemiasFilter.jsx";
 import ButtonTheme from "../components/ButtonTheme.jsx";
 
