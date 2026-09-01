@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 
 // importação de imagens para o maps ----------
 // imagens das ubs do perimetro urbano
+import defaultImage from "../../assets/ubs/defaultImage.png";
 import postodeSaudeTaboca from "../../assets/ubs/PostodeSaúdedaTaboca.jpg";
 import JasminaBucar from "../../assets/ubs/jasminabucar.jpg";
 import VianaCarvalho from "../../assets/ubs/vianacarvalho.jpg";
@@ -31,11 +32,10 @@ import santaCruz from "../../assets/ubs/santacruz.png";
 import ubsFloriano from "../../assets/ubs/ubsfloriano.jpg";
 import dirceuArcoverde from "../../assets/ubs/dirceuarcoverde.png";
 import joseParaguassu from "../../assets/ubs/joseparaguassu.jpg";
-import theodoroSobral from "../../assets/ubs/TheodoroSobral.jpg";
 import pedroSimplicio from "../../assets/ubs/pedroSimplicio.jpg";
 import alfedroCarvalho from "../../assets/ubs/alfredoCarvalho.jpg";
-import defaultImage from "../../assets/ubs/defaultImage.png";
 import RaimundoFilho from "../../assets/ubs/ubsRaimundoFilho.png";
+import TheodoroSobral from "../../assets/ubs/theodoroSobral.png";
 // imagens das ubs do perimetro rural
 import MargaridaAlvez from "../../assets/ubs/MargaridaAlvez.jpeg";
 import RaimundoBenvindoLima from "../../assets/ubs/RaimundoBenvindoLima.jpeg";
@@ -1931,7 +1931,7 @@ const marcadores = [
     reviews: 2,
     hours: "07:00 AM - 5:00 PM",
     color: "#8b5cf6",
-    image: theodoroSobral,
+    image: TheodoroSobral,
     lng: -43.020540939559325,
     lat: -6.778873054851179,
   },
