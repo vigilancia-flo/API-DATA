@@ -44,10 +44,15 @@ export default function Dashboard() {
 
   // Busca os dados da API Django
   useEffect(() => {
-    fetch(
-      "[https://api-data-backend.onrender.com](https://api-data-backend.onrender.com)",
-    )
-      .then((response) => response.json())
+    const baseUrl = import.meta.env.VITE_API_URL;
+
+    fetch(`${baseUrl}api/pacientes/`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Erro HTTP! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
         setPacientes(data);
         setLoading(false);
