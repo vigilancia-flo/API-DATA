@@ -44,7 +44,7 @@ export default function Dashboard() {
 
   // Busca os dados da API Django
   useEffect(() => {
-    fetch("https://api-data-backend.onrender.com/api/pacientes/")
+    fetch("http://api-data-backend.onrender.com/api/pacientes/")
       .then((response) => response.json())
       .then((data) => {
         setPacientes(data);
