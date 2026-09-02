@@ -1854,7 +1854,7 @@ export default function MapDengue() {
     setLoading(true);
     const apiUrl = import.meta.env.VITE_API_URL;
 
-    fetch(`${apiUrl}/pacientes/`)
+    fetch(`${apiUrl}/api/pacientes/`)
       .then((res) => {
         if (!res.ok) throw new Error("Erro na requisição da API do Mapa");
         return res.json();
