@@ -940,6 +940,7 @@ function MapRoute({
   const id = propId ?? autoId;
   const sourceId = `route-source-${id}`;
   const layerId = `route-layer-${id}`;
+  const symbolLayerId = `geojson-symbol-${id}`;
 
   // Add source and layer on mount
   useEffect(() => {
@@ -976,6 +977,17 @@ function MapRoute({
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    return () => {
+      try {
+        if (map.getLayer(symbolLayerId)) map.removeLayer(symbolLayerId); // 2. ADICIONE ESSA LINHA AQUI
+        if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
+        if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
+        if (map.getSource(sourceId)) map.removeSource(sourceId);
+      } catch {
+        // style may be mid-reload
+      }
+    };
   }, [isLoaded, map]);
 
   // When coordinates change, update the source data
@@ -1072,6 +1084,7 @@ function MapGeoJSON({
   const sourceId = `geojson-source-${id}`;
   const fillLayerId = `geojson-fill-${id}`;
   const lineLayerId = `geojson-line-${id}`;
+  const symbolLayerId = `geojson-symbol-${id}`; // Escopo correto aqui no topo
 
   const defaults = GEOJSON_DEFAULT_COLORS[resolvedTheme];
 
@@ -1109,6 +1122,7 @@ function MapGeoJSON({
 
     return () => {
       try {
+        if (map.getLayer(symbolLayerId)) map.removeLayer(symbolLayerId); // Cleanup do texto
         if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
         if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
         if (map.getSource(sourceId)) map.removeSource(sourceId);
@@ -1161,6 +1175,30 @@ function MapGeoJSON({
       map.removeLayer(lineLayerId);
     }
 
+    // Camada de texto renderizada aqui
+    if (!map.getLayer(symbolLayerId)) {
+      map.addLayer(
+        {
+          id: symbolLayerId,
+          type: "symbol",
+          source: sourceId,
+          layout: {
+            "text-field": ["get", "name"],
+            "text-size": 12,
+            "text-anchor": "center",
+            "text-justify": "center",
+            "symbol-placement": "point",
+          },
+          paint: {
+            "text-color": "#054060",
+            "text-halo-color": "#ffffff",
+            "text-halo-width": 2,
+          },
+        },
+        beforeId,
+      );
+    }
+
     if (showFill && map.getLayer(fillLayerId)) {
       for (const [key, value] of Object.entries(mergedFillPaint)) {
         map.setPaintProperty(fillLayerId, key, value);
@@ -1177,6 +1215,7 @@ function MapGeoJSON({
     sourceId,
     fillLayerId,
     lineLayerId,
+    symbolLayerId,
     showFill,
     showLine,
     mergedFillPaint,

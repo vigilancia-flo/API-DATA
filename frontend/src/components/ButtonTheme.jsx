@@ -21,6 +21,7 @@ export default function ButtonTheme({
           <option value="dark">Escuro (Carto)</option>
           <option value="openstreetmap">OpenStreetMap</option>
           <option value="openstreetmap3d">Visão 3D</option>
+          <option value="satellite">Satélite</option>
         </select>
       </div>
       <button
