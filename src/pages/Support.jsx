@@ -28,7 +28,7 @@ function Support() {
 
       try {
         const response = await fetch(
-          "http://api-data-backend.onrender.com/chat",
+          "[https://api-data-backend.onrender.com](https://api-data-backend.onrender.com)",
           {
             method: "POST",
             headers: {
