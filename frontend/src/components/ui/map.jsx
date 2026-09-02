@@ -1084,6 +1084,7 @@ function MapGeoJSON({
   const sourceId = `geojson-source-${id}`;
   const fillLayerId = `geojson-fill-${id}`;
   const lineLayerId = `geojson-line-${id}`;
+  const symbolLayerId = `geojson-symbol-${id}`; // Escopo correto aqui no topo
 
   const defaults = GEOJSON_DEFAULT_COLORS[resolvedTheme];
 
@@ -1121,6 +1122,7 @@ function MapGeoJSON({
 
     return () => {
       try {
+        if (map.getLayer(symbolLayerId)) map.removeLayer(symbolLayerId); // Cleanup do texto
         if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
         if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
         if (map.getSource(sourceId)) map.removeSource(sourceId);
@@ -1173,6 +1175,30 @@ function MapGeoJSON({
       map.removeLayer(lineLayerId);
     }
 
+    // Camada de texto renderizada aqui
+    if (!map.getLayer(symbolLayerId)) {
+      map.addLayer(
+        {
+          id: symbolLayerId,
+          type: "symbol",
+          source: sourceId,
+          layout: {
+            "text-field": ["get", "name"],
+            "text-size": 12,
+            "text-anchor": "center",
+            "text-justify": "center",
+            "symbol-placement": "point",
+          },
+          paint: {
+            "text-color": "#054060",
+            "text-halo-color": "#ffffff",
+            "text-halo-width": 2,
+          },
+        },
+        beforeId,
+      );
+    }
+
     if (showFill && map.getLayer(fillLayerId)) {
       for (const [key, value] of Object.entries(mergedFillPaint)) {
         map.setPaintProperty(fillLayerId, key, value);
@@ -1183,50 +1209,13 @@ function MapGeoJSON({
         map.setPaintProperty(lineLayerId, key, value);
       }
     }
-
-    if (showLine && !map.getLayer(lineLayerId)) {
-      map.addLayer(
-        {
-          id: lineLayerId,
-          type: "line",
-          source: sourceId,
-          paint: mergedLinePaint,
-        },
-        beforeId,
-      );
-    } else if (!showLine && map.getLayer(lineLayerId)) {
-      map.removeLayer(lineLayerId);
-    }
-
-    // 3. ADICIONE TODO ESTE BLOCO AQUI PARA RENDERIZAR OS TEXTOS:
-    if (!map.getLayer(symbolLayerId)) {
-      map.addLayer(
-        {
-          id: symbolLayerId,
-          type: "symbol",
-          source: sourceId,
-          layout: {
-            "text-field": ["get", "name"], // Lê a propriedade "name" que está nos seus polígonos
-            "text-size": 12,
-            "text-anchor": "center",
-            "text-justify": "center",
-            "symbol-placement": "point",
-          },
-          paint: {
-            "text-color": "#054060", // Cor do texto
-            "text-halo-color": "#ffffff", // Borda branca para dar leitura fácil
-            "text-halo-width": 2,
-          },
-        },
-        beforeId,
-      );
-    }
   }, [
     isLoaded,
     map,
     sourceId,
     fillLayerId,
     lineLayerId,
+    symbolLayerId,
     showFill,
     showLine,
     mergedFillPaint,
