@@ -50,6 +50,29 @@ const MAP_STYLES = {
   dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
   openstreetmap: "https://tiles.openfreemap.org/styles/bright",
   openstreetmap3d: "https://tiles.openfreemap.org/styles/liberty",
+
+  satellite: {
+    version: 8,
+    sources: {
+      "esri-satellite": {
+        type: "raster",
+        tiles: [
+          "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        ],
+        tileSize: 256,
+        attribution: "Tiles &copy; Esri &mdash; Source: Esri",
+      },
+    },
+    layers: [
+      {
+        id: "satellite-layer",
+        type: "raster",
+        source: "esri-satellite",
+        minzoom: 0,
+        maxzoom: 22,
+      },
+    ],
+  },
 };
 
 const bairrosFlorianoGeoJSON = {
@@ -1929,6 +1952,7 @@ export default function MapDengue() {
                 ref={mapRef}
                 center={[-43.0225, -6.7672]}
                 zoom={13.5}
+                mapStyle={MAP_STYLES[activeStyle]}
                 styles={{
                   light: MAP_STYLES[activeStyle] || MAP_STYLES.light,
                   dark: MAP_STYLES[activeStyle] || MAP_STYLES.dark,
