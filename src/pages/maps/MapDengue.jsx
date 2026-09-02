@@ -1852,10 +1852,13 @@ export default function MapDengue() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(
-      "[https://api-data-backend.onrender.com](https://api-data-backend.onrender.com)",
-    )
-      .then((res) => res.json())
+    const apiUrl = import.meta.env.VITE_API_URL;
+
+    fetch(`${apiUrl}/api/pacientes/`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Erro na requisição da API do Mapa");
+        return res.json();
+      })
       .then((data) => {
         setTodosPacientes(data);
         setLoading(false);

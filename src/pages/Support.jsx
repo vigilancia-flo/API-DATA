@@ -27,16 +27,15 @@ function Support() {
       setInputValue("");
 
       try {
-        const response = await fetch(
-          "[https://api-data-backend.onrender.com](https://api-data-backend.onrender.com)",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ message: userText }),
+        const apiUrl = import.meta.env.VITE_API_URL;
+
+        const response = await fetch(`${apiUrl}/chat/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+          body: JSON.stringify({ message: userText }),
+        });
 
         const data = await response.json();
 
