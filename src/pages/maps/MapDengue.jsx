@@ -81,7 +81,7 @@ const bairrosFlorianoGeoJSON = {
     {
       type: "Feature",
       properties: {
-        name: "PERIMETRO_URBANO_FLORIANO",
+        name: "PERIMETRO URBANO FLORIANO",
         color: "#808080",
         fill: "rgba(197, 197, 197, 1)",
       },
@@ -1982,7 +1982,12 @@ export default function MapDengue() {
                       <div className="size-5 cursor-pointer rounded-full border-2 border-white bg-red-500 shadow-lg transition-transform h-6 w-6 hover:scale-110">
                         <p className="text-center text-white font-bold">U</p>
                       </div>
-                      <MarkerLabel position="bottom">{place.label}</MarkerLabel>
+                      <MarkerLabel
+                        position="bottom"
+                        className=" rounded-2xl flex bg-white/35 p-1 gap-1.5 "
+                      >
+                        {place.label}
+                      </MarkerLabel>
                     </MarkerContent>
                     <MarkerPopup className="w-62 p-0">
                       <div className="relative h-32 overflow-hidden rounded-t-md">
@@ -1997,7 +2002,7 @@ export default function MapDengue() {
                           <p className="text-muted-foreground pb-0.5 text-[11px] font-medium tracking-wide uppercase">
                             {place.category}
                           </p>
-                          <h3 className="text-foreground leading-tight font-semibold">
+                          <h3 className="text-foreground leading-tight font-semibol">
                             {place.name}
                           </h3>
                         </div>
