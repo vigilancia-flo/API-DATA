@@ -1852,7 +1852,9 @@ export default function MapDengue() {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://api-data-backend.onrender.com/api/pacientes/")
+    fetch(
+      "[https://api-data-backend.onrender.com](https://api-data-backend.onrender.com)",
+    )
       .then((res) => res.json())
       .then((data) => {
         setTodosPacientes(data);
