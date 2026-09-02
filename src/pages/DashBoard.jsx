@@ -46,7 +46,7 @@ export default function Dashboard() {
   useEffect(() => {
     const baseUrl = import.meta.env.VITE_API_URL;
 
-    fetch(`${baseUrl}/api/pacientes/`)
+    fetch(`${baseUrl}/pacientes/`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Erro HTTP! status: ${response.status}`);
