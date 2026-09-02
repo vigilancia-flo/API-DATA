@@ -43,6 +43,7 @@ import Morrinhos from "../../assets/ubs/Morrinhos.jpeg";
 import RosaRodriguesCamelo from "../../assets/ubs/RosaRodriguesCamelo.jpeg";
 import ProtasioMoraes from "../../assets/ubs/ProtasioMoraes.png";
 import UbsL3 from "../../assets/ubs/UbsL3.jpeg";
+import LeonardoDudima from "../../assets/ubs/LeonardoDudima.jpeg";
 
 const MAP_STYLES = {
   light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
@@ -2130,7 +2131,7 @@ const marcadores = [
     reviews: 2,
     hours: "07:00 AM - 5:00 PM",
     color: "#8b5cf6",
-    image: defaultImage,
+    image: LeonardoDudima,
     lng: -43.262039544583175,
     lat: -6.786737604151918,
   },

@@ -940,6 +940,7 @@ function MapRoute({
   const id = propId ?? autoId;
   const sourceId = `route-source-${id}`;
   const layerId = `route-layer-${id}`;
+  const symbolLayerId = `geojson-symbol-${id}`;
 
   // Add source and layer on mount
   useEffect(() => {
@@ -976,6 +977,17 @@ function MapRoute({
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    return () => {
+      try {
+        if (map.getLayer(symbolLayerId)) map.removeLayer(symbolLayerId); // 2. ADICIONE ESSA LINHA AQUI
+        if (map.getLayer(lineLayerId)) map.removeLayer(lineLayerId);
+        if (map.getLayer(fillLayerId)) map.removeLayer(fillLayerId);
+        if (map.getSource(sourceId)) map.removeSource(sourceId);
+      } catch {
+        // style may be mid-reload
+      }
+    };
   }, [isLoaded, map]);
 
   // When coordinates change, update the source data
@@ -1170,6 +1182,44 @@ function MapGeoJSON({
       for (const [key, value] of Object.entries(mergedLinePaint)) {
         map.setPaintProperty(lineLayerId, key, value);
       }
+    }
+
+    if (showLine && !map.getLayer(lineLayerId)) {
+      map.addLayer(
+        {
+          id: lineLayerId,
+          type: "line",
+          source: sourceId,
+          paint: mergedLinePaint,
+        },
+        beforeId,
+      );
+    } else if (!showLine && map.getLayer(lineLayerId)) {
+      map.removeLayer(lineLayerId);
+    }
+
+    // 3. ADICIONE TODO ESTE BLOCO AQUI PARA RENDERIZAR OS TEXTOS:
+    if (!map.getLayer(symbolLayerId)) {
+      map.addLayer(
+        {
+          id: symbolLayerId,
+          type: "symbol",
+          source: sourceId,
+          layout: {
+            "text-field": ["get", "name"], // Lê a propriedade "name" que está nos seus polígonos
+            "text-size": 12,
+            "text-anchor": "center",
+            "text-justify": "center",
+            "symbol-placement": "point",
+          },
+          paint: {
+            "text-color": "#054060", // Cor do texto
+            "text-halo-color": "#ffffff", // Borda branca para dar leitura fácil
+            "text-halo-width": 2,
+          },
+        },
+        beforeId,
+      );
     }
   }, [
     isLoaded,
