@@ -1932,91 +1932,114 @@ export default function MapDengue() {
       });
   }, []);
 
+  // Função que lida com o endereço unificado do backend (ignorando o CEP)
+  const extrairBairro = (endereco) => {
+    if (!endereco) return "";
+    const partes = endereco.split(",");
+    if (partes.length === 1) return "";
+
+    let bairroStr = partes[partes.length - 1].trim();
+    // Se a última parte for número (CEP), pega a penúltima (Bairro)
+    if (/^[0-9-]+$/.test(bairroStr) && partes.length > 2) {
+      bairroStr = partes[partes.length - 2].trim();
+    }
+
+    return bairroStr
+      .toUpperCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, ""); // Retorna sem acentos e maiúsculo
+  };
+
   useEffect(() => {
     if (todosPacientes.length === 0) return;
 
     const pacientesFiltrados = todosPacientes.filter((p) => {
       const agravo = p.id_agravo ? p.id_agravo.toUpperCase() : "";
 
-      if (endemiaSelecionada === "dengue") {
+      if (endemiaSelecionada === "dengue")
         return agravo.includes("A90") || agravo === "";
-      }
-      if (endemiaSelecionada === "sifilis") {
+      if (endemiaSelecionada === "sifilis")
         return (
           agravo.includes("A51") ||
           agravo.includes("A52") ||
           agravo.includes("A53")
         );
-      }
-      if (endemiaSelecionada === "tuberculose") {
+      if (endemiaSelecionada === "tuberculose")
         return agravo.includes("A15") || agravo.includes("A16");
-      }
-      if (endemiaSelecionada === "gerais") {
-        return true;
-      }
+      if (endemiaSelecionada === "gerais") return true;
 
       return true;
     });
 
-    // 1. DICIONÁRIO DE/PARA
-    // Esquerda: O que vem da sua API (id_unidade)
-    // Direita: O nome EXATO como está no GeoJSON (sem acentos e em maiúsculo)
-    const dicionarioDaUbs = {
-      // --- ZONA URBANA ---
-      "ALFREDO DE CARVALHO": "AREA UBS ALFREDO DE CARVALHO",
-      "CAMILO FILHO": "AREA UBS CAMILO FILHO",
-      "DIRCEU ARCOVERDE": "AREA UBS DIRCEU ARCOVERDE",
-      FLORIANO: "AREA UBS FLORIANO",
-      "HELVIDIO DE HOLANDA BARROS": "AREA UBS HELVIDIO DE HOLANDA BARROS",
-      "JASMINA BUCAR": "AREA DA UBS JASMINA BUCAR",
-      "JOAO ELIAS OKA": "AREA UBS JOAO ELIAS OKA",
-      "JOSE PARAGUASSU": "AREA UBS JOSE PARAGUASSU",
-      "LUIZ TAVARES": "AREA DA UBS LUIZ TAVARES",
+    // 1. DICIONÁRIO BAIRRO -> ÁREA UBS
+    const bairroParaAreaUbs = {
+      CENTRO: "AREA UBS FLORIANO",
+      SAMBAIBA: "AREA UBS DIRCEU ARCOVERDE",
+      "SAMBAIBA VELHA": "AREA UBS DIRCEU ARCOVERDE",
+      MANGUINHA: "AREA UBS JOSE PARAGUASSU",
+      "ALTO DA CRUZ": "AREA UBS THEODORO FERREIRA SOBRAL",
+      "CAMPO VELHO": "AREA DA UBS PEDRO SIMPLICIO",
+      "REDE NOVA": "AREA UBS ALFREDO DE CARVALHO",
+      TABOCA: "AREA DA UBS LUIZ TAVARES",
+      "IRAPUA I": "AREA UBS CAMILO FILHO",
+      "IRAPUA II": "AREA UBS CAMILO FILHO",
       "NOSSA SENHORA DA GUIA": "AREA UBS NOSSA SENHORA DA GUIA",
-      PAM: "AREA UBS PAM",
-      "PAULO KALUME": "AREA UBS PAULO KALUME",
-      "PAULO KALUME II": "AREA UBS PAULO KALUME II",
-      "PAULO MARTINS": "AREA UBS PAULO MARTINS",
-      "PEDRO SIMPLICIO": "AREA DA UBS PEDRO SIMPLICIO",
-      "RAIMUNDO FILHO": "AREA UBS RAIMUNDO FILHO",
-      "SANTA CRUZ": "AREA UBS SANTA CRUZ",
-      "THEODORO FERREIRA SOBRAL": "AREA UBS THEODORO FERREIRA SOBRAL",
-      "VIANA DE CARVALHO": "AREA UBS VIANA DE CARVALHO",
+      TIBERAO: "AREA UBS RAIMUNDO FILHO",
 
-      // --- ZONA RURAL ---
-      L3: "AREA UBS L3",
-      "LEONARDO DUDIMA": "AREA UBS LEONARDO DUDIMA",
-      "MARGARIDA ALVES": "AREA UBS MARGARIDA ALVES",
-      MORRINHOS: "AREA UBS MORRINHOS",
-      "PROTASIO DE MORAES": "AREA UBS PROTASIO DE MORAES",
-      "RAIMUNDO BENVINDO LIMA": "AREA UBS RAIMUNDO BENVINDO LIMA",
-      "RETIRO AMOLAR": "AREA UBS RETIRO AMOLAR",
+      // --- BAIRROS NOVOS ADICIONADOS DO CONSOLE (AJUSTE A UBS CORRESPONDENTE) ---
+      "BOM LUGAR": "AREA UBS PAULO KALUME",
+      "BOSQUE SANTA TEREZINHA": "AREA UBS JOAO ELIAS OKA",
+      "CAIXA D AGUA": "AREA UBS THEODORO FERREIRA SOBRAL",
+      CAJUEIRO: "AREA UBS JOAO ELIAS OKA", // <- Exemplo
+      "ALTO DA GUIA": "AREA UBS NOSSA SENHORA DA GUIA",
+      CURADOR: "AREA UBS THEODORO FERREIRA SOBRAL",
+      IBIAPABA: "AREA UBS VIANA DE CARVALHO",
+      "PAU FERRADO": "AREA UBS PAULO MARTINS", // <- Exemplo
+      "SAO BORJA": "AREA UBS VIANA DE CARVALHO", // <- Exemplo
+      "PLANALTO SAMBAIBA": "AREA UBS DIRCEU ARCOVERDE",
+      CATUMBI: "AREA UBS HELVIDIO DE HOLANDA BARROS", // <- Exemplo
+      "SAO CRISTOVAO": "AREA UBS FLORIANO", // <- Exemplo
+      TAMBORIL: "AREA UBS JOSE PARAGUASSU", // <- Exemplo
+      "CONJUNTO  PARAISO": "AREA UBS PAULO KALUME", // exemplo
+      CANCELA: "AREA DA UBS PEDRO SIMPLICIO", // <- Exemplo
+      CANOAS: "AREA UBS FLORIANO", // <- Exemplo
+      "PLANALTO BELA VISTA": "AREA UBS CAMILO FILHO", // <- Exemplo
+
+      // --- ERROS DE DIGITAÇÃO / SINAN ---
+      MELADO: "AREA DA UBS PEDRO SIMPLICIO", // Provável "Meladão"
+      MELADAO: "AREA DA UBS PEDRO SIMPLICIO",
+      "VIA AZUL": "AREA UBS RAIMUNDO FILHO", // Provável "Viazul"
+      VIAZUL: "AREA UBS RAIMUNDO FILHO",
+      "PEDRO SIMPLICIO": "AREA DA UBS PEDRO SIMPLICIO", // Inseriram a UBS no lugar do bairro
+
+      // --- CEPS SOLTOS (Se possível, mapeie para a UBS daquele CEP) ---
+      64800280: "AREA UBS DIRCEU ARCOVERDE", // Exemplo: Rua do Sambaíba
+      64800850: "AREA UBS RAIMUNDO FILHO", // Exemplo: Rua do Tiberão
+      64800860: "AREA UBS RAIMUNDO FILHO", // Exemplo: Rua do Tiberão
+      64800000: "AREA UBS FLORIANO", // CEP Geral
     };
 
     const contagemPorArea = {};
 
+    // 2. CONTAGEM
     pacientesFiltrados.forEach((paciente) => {
-      if (paciente.id_unidade) {
-        // Limpa a string que vem do banco para facilitar o match
-        const idBanco = String(paciente.id_unidade)
-          .toUpperCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .trim();
+      if (paciente.endereco) {
+        const bairroNormalizado = extrairBairro(paciente.endereco);
 
-        // Faz o mapeamento seguro
-        const nomeNoMapa = dicionarioDaUbs[idBanco];
+        // Pega o nome da UBS correspondente ao bairro do paciente
+        const nomeAreaMapa = bairroParaAreaUbs[bairroNormalizado];
 
-        // RETIRE O COMENTÁRIO ABAIXO se a contagem continuar zero
-        // console.log(`Banco: "${idBanco}" -> Mapa: "${nomeNoMapa}"`);
-
-        // Só soma se encontrar a área correspondente
-        if (nomeNoMapa) {
-          contagemPorArea[nomeNoMapa] = (contagemPorArea[nomeNoMapa] || 0) + 1;
+        if (nomeAreaMapa) {
+          contagemPorArea[nomeAreaMapa] =
+            (contagemPorArea[nomeAreaMapa] || 0) + 1;
+        } else {
+          // Descomente a linha abaixo para ver no console (F12) quais bairros faltam no dicionário
+          // console.warn("Bairro sem UBS mapeada no dicionário:", bairroNormalizado);
         }
       }
     });
 
+    // 3. INJEÇÃO DOS DADOS NO MAPA
     const updatedFeatures = bairrosFlorianoGeoJSON.features.map((feature) => {
       const corOriginal =
         feature.properties.fill || feature.properties.color || "#808080";
@@ -2025,12 +2048,12 @@ export default function MapDengue() {
       let numeroCasos = 0;
 
       if (nomeOriginal) {
-        // Deixa o nome do GeoJSON no mesmo formato (sem acentos e maiúsculo)
         const nomeAreaGeoJSON = nomeOriginal
           .toUpperCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "");
 
+        // Puxa do objeto que acabamos de montar a contagem agrupada
         numeroCasos = contagemPorArea[nomeAreaGeoJSON] || 0;
       }
 
