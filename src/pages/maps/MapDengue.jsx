@@ -347,7 +347,7 @@ const bairrosFlorianoGeoJSON = {
         ],
       },
       properties: {
-        name: "Polígono 4",
+        name: "ÁREA UBS DIRCEU ARCOVERDE",
         styleUrl: "#poly-1A237E-2301-219-nodesc",
         "fill-opacity": 0.4,
         fill: "#1a237e",
