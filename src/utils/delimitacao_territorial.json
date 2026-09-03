@@ -1182,7 +1182,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS L3",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1210,7 +1213,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS LEONARDO DUDIMA",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1242,7 +1248,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS MORRINHOS",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1278,7 +1287,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS MARGARIDA ALVES",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1301,7 +1313,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS PROTÁSIO DE MORAES",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1335,7 +1350,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS RAIMUNDO BENVINDO LIMA",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1362,7 +1380,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS RETIRO AMOLAR",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [

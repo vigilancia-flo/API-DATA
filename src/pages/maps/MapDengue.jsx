@@ -81,7 +81,7 @@ const bairrosFlorianoGeoJSON = {
     {
       type: "Feature",
       properties: {
-        name: "PERIMETRO URBANO FLORIANO",
+        name: "PERIMETRO_URBANO_FLORIANO",
         color: "#808080",
         fill: "rgba(197, 197, 197, 1)",
       },
@@ -482,7 +482,7 @@ const bairrosFlorianoGeoJSON = {
         ],
       },
       properties: {
-        name: "ÁREA UBS CAMILO FILHO",
+        name: "ÁREA CAMILO FILHO",
         styleUrl: "#poly-880E4F-1200-201-nodesc",
         "fill-opacity": 0.4,
         fill: "#880e4f",
@@ -824,7 +824,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS THEODORO FERREIRA SOBRAL",
         styleUrl: "#poly-7CB342-1200-184-nodesc",
-        "fill-opacity": 0.7215686274509804,
+        "fill-opacity": 0.4,
         fill: "#7cb342",
         "stroke-opacity": 1,
         stroke: "#7cb342",
@@ -1151,7 +1151,7 @@ const bairrosFlorianoGeoJSON = {
         ],
       },
       properties: {
-        name: "ÁREA DA UBS JASMINA BUCAR",
+        name: "ÁREA UBS JASMINA BUCAR",
         styleUrl: "#poly-097138-1200-171-nodesc",
         "fill-opacity": 0.4,
         fill: "#097138",
@@ -1198,7 +1198,7 @@ const bairrosFlorianoGeoJSON = {
         ],
       },
       properties: {
-        name: "ÁREA DA UBS PEDRO SIMPLÍCIO",
+        name: "ÁREA UBS PEDRO SIMPLÍCIO",
         styleUrl: "#poly-0288D1-1200-184-nodesc",
         "fill-opacity": 0.4,
         fill: "#0288d1",
@@ -1259,7 +1259,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS L3",
+        color: "#808080",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1287,7 +1290,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS LEONARDO DUDIMA",
+        color: "#808080",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1319,7 +1325,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS MORRINHOS",
+        color: "#808080",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1355,7 +1364,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS MARGARIDA ALVES",
+        color: "#808080",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1378,7 +1390,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS PROTÁSIO DE MORAES",
+        color: "#808080",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1412,7 +1427,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS RAIMUNDO BENVINDO LIMA",
+        color: "#808080",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1439,7 +1457,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS RETIRO AMOLAR",
+        color: "#808080",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1549,7 +1570,7 @@ const bairrosFlorianoGeoJSON = {
         ],
       },
       properties: {
-        name: "ÁREA DA UBS LUIZ TAVARES",
+        name: "ÁREA UBS LUIZ TAVARES",
         styleUrl: "#poly-FFEA00-601-31-nodesc",
         "fill-opacity": 0.12156862745098039,
         fill: "#ffea00",
@@ -1732,6 +1753,46 @@ const marcadores = [
     lng: -43.01058274720951,
     lat: -6.764758882936275,
   },
+  {
+    id: "camiloFilho",
+    name: "Posto de Saúde Camilo Filho",
+    label: "Posto de Saúde Camilo Filho",
+    category: "UBS",
+    rating: 4,
+    reviews: 2,
+    hours: "07:00 AM - 5:00 PM",
+    color: "#8b5cf6",
+    image: VianaCarvalho,
+    lng: -43.04194310195003,
+    lat: -6.78623928806005,
+  },
+  {
+    id: "pauloKalume",
+    name: "Posto de Saúde Paulo Kalume",
+    label: "Posto de Saúde Paulo Kalume",
+    category: "UBS",
+    rating: 4,
+    reviews: 2,
+    hours: "07:00 AM - 5:00 PM",
+    color: "#8b5cf6",
+    image: VianaCarvalho,
+    lng: -43.00642190016104,
+    lat: -6.778271099329543,
+  },
+  {
+    id: "nossaSenhoraGuia",
+    name: "UBS Nossa Senhora da Guia",
+    label: "UBS Nossa Senhora da Guia",
+    category: "UBS",
+    rating: 4,
+    reviews: 2,
+    hours: "07:00 AM - 5:00 PM",
+    color: "#8b5cf6",
+    image: VianaCarvalho,
+    lng: -43.009957159718944,
+    lat: -6.801771476889063,
+  },
+
   // =========== UBSs da zona rural ===========
   {
     id: "margarida",
@@ -1897,36 +1958,80 @@ export default function MapDengue() {
       return true;
     });
 
-    const contagemPorBairro = {};
+    // 1. DICIONÁRIO DE/PARA
+    // Esquerda: O que vem da sua API (id_unidade)
+    // Direita: O nome EXATO como está no GeoJSON (sem acentos e em maiúsculo)
+    const dicionarioDaUbs = {
+      // --- ZONA URBANA ---
+      "ALFREDO DE CARVALHO": "AREA UBS ALFREDO DE CARVALHO",
+      "CAMILO FILHO": "AREA UBS CAMILO FILHO",
+      "DIRCEU ARCOVERDE": "AREA UBS DIRCEU ARCOVERDE",
+      FLORIANO: "AREA UBS FLORIANO",
+      "HELVIDIO DE HOLANDA BARROS": "AREA UBS HELVIDIO DE HOLANDA BARROS",
+      "JASMINA BUCAR": "AREA DA UBS JASMINA BUCAR",
+      "JOAO ELIAS OKA": "AREA UBS JOAO ELIAS OKA",
+      "JOSE PARAGUASSU": "AREA UBS JOSE PARAGUASSU",
+      "LUIZ TAVARES": "AREA DA UBS LUIZ TAVARES",
+      "NOSSA SENHORA DA GUIA": "AREA UBS NOSSA SENHORA DA GUIA",
+      PAM: "AREA UBS PAM",
+      "PAULO KALUME": "AREA UBS PAULO KALUME",
+      "PAULO KALUME II": "AREA UBS PAULO KALUME II",
+      "PAULO MARTINS": "AREA UBS PAULO MARTINS",
+      "PEDRO SIMPLICIO": "AREA DA UBS PEDRO SIMPLICIO",
+      "RAIMUNDO FILHO": "AREA UBS RAIMUNDO FILHO",
+      "SANTA CRUZ": "AREA UBS SANTA CRUZ",
+      "THEODORO FERREIRA SOBRAL": "AREA UBS THEODORO FERREIRA SOBRAL",
+      "VIANA DE CARVALHO": "AREA UBS VIANA DE CARVALHO",
+
+      // --- ZONA RURAL ---
+      L3: "AREA UBS L3",
+      "LEONARDO DUDIMA": "AREA UBS LEONARDO DUDIMA",
+      "MARGARIDA ALVES": "AREA UBS MARGARIDA ALVES",
+      MORRINHOS: "AREA UBS MORRINHOS",
+      "PROTASIO DE MORAES": "AREA UBS PROTASIO DE MORAES",
+      "RAIMUNDO BENVINDO LIMA": "AREA UBS RAIMUNDO BENVINDO LIMA",
+      "RETIRO AMOLAR": "AREA UBS RETIRO AMOLAR",
+    };
+
+    const contagemPorArea = {};
+
     pacientesFiltrados.forEach((paciente) => {
-      if (paciente.endereco) {
-        const partes = paciente.endereco.split(",");
-        const bairroStr = partes[partes.length - 1].trim().toUpperCase();
-        const bairroNormalizado = bairroStr
+      if (paciente.id_unidade) {
+        // Limpa a string que vem do banco para facilitar o match
+        const idBanco = String(paciente.id_unidade)
+          .toUpperCase()
           .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
-        contagemPorBairro[bairroNormalizado] =
-          (contagemPorBairro[bairroNormalizado] || 0) + 1;
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim();
+
+        // Faz o mapeamento seguro
+        const nomeNoMapa = dicionarioDaUbs[idBanco];
+
+        // RETIRE O COMENTÁRIO ABAIXO se a contagem continuar zero
+        // console.log(`Banco: "${idBanco}" -> Mapa: "${nomeNoMapa}"`);
+
+        // Só soma se encontrar a área correspondente
+        if (nomeNoMapa) {
+          contagemPorArea[nomeNoMapa] = (contagemPorArea[nomeNoMapa] || 0) + 1;
+        }
       }
     });
 
     const updatedFeatures = bairrosFlorianoGeoJSON.features.map((feature) => {
       const corOriginal =
         feature.properties.fill || feature.properties.color || "#808080";
-
-      // 1. Pegamos o nome. Se não existir, usamos uma string vazia (evita o erro do undefined)
       const nomeOriginal = feature.properties.name || "";
 
-      // 2. Normalizamos apenas se houver um nome
       let numeroCasos = 0;
 
       if (nomeOriginal) {
-        const nomeArea = nomeOriginal
+        // Deixa o nome do GeoJSON no mesmo formato (sem acentos e maiúsculo)
+        const nomeAreaGeoJSON = nomeOriginal
           .toUpperCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "");
 
-        numeroCasos = contagemPorBairro[nomeArea] || 0;
+        numeroCasos = contagemPorArea[nomeAreaGeoJSON] || 0;
       }
 
       return {
