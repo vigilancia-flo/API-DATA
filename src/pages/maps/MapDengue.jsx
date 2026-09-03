@@ -1834,6 +1834,8 @@ export default function MapDengue() {
   const [geoData, setGeoData] = useState(bairrosFlorianoGeoJSON);
   const [loading, setLoading] = useState(true);
 
+  const [hoverInfo, setHoverInfo] = useState(null);
+
   const [todosPacientes, setTodosPacientes] = useState([]);
   const [endemiaSelecionada, setEndemiaSelecionada] = useState("dengue");
 
@@ -1909,15 +1911,30 @@ export default function MapDengue() {
     });
 
     const updatedFeatures = bairrosFlorianoGeoJSON.features.map((feature) => {
-      // Busca a cor em 'fill' (padrão exportado) ou 'color', com um fallback padrão
       const corOriginal =
         feature.properties.fill || feature.properties.color || "#808080";
+
+      // 1. Pegamos o nome. Se não existir, usamos uma string vazia (evita o erro do undefined)
+      const nomeOriginal = feature.properties.name || "";
+
+      // 2. Normalizamos apenas se houver um nome
+      let numeroCasos = 0;
+
+      if (nomeOriginal) {
+        const nomeArea = nomeOriginal
+          .toUpperCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+
+        numeroCasos = contagemPorBairro[nomeArea] || 0;
+      }
 
       return {
         ...feature,
         properties: {
           ...feature.properties,
-          color: corOriginal, // Alimenta a propriedade 'color' que o Maplibre vai ler
+          color: corOriginal,
+          casos: numeroCasos,
         },
       };
     });
@@ -1953,91 +1970,127 @@ export default function MapDengue() {
                 <Activity className="size-8 text-blue-500 animate-spin" />
               </div>
             ) : (
-              <Map
-                ref={mapRef}
-                center={[-43.0225, -6.7672]}
-                zoom={13.5}
-                mapStyle={MAP_STYLES[activeStyle]}
-                styles={{
-                  light: MAP_STYLES[activeStyle] || MAP_STYLES.light,
-                  dark: MAP_STYLES[activeStyle] || MAP_STYLES.dark,
-                }}
-              >
-                {/* estilo do maps */}
-                <MapGeoJSON
-                  data={geoData}
-                  fillPaint={{
-                    "fill-color": ["get", "color"],
-                    "fill-opacity": 0.3,
+              <div className="relative w-full h-full">
+                <Map
+                  ref={mapRef}
+                  center={[-43.0225, -6.7672]}
+                  zoom={13.5}
+                  mapStyle={MAP_STYLES[activeStyle]}
+                  styles={{
+                    light: MAP_STYLES[activeStyle] || MAP_STYLES.light,
+                    dark: MAP_STYLES[activeStyle] || MAP_STYLES.dark,
                   }}
-                  linePaint={{
-                    "line-color": ["get", "color"],
-                    "line-width": 2,
-                    "line-dasharray": [2, 2],
-                  }}
-                />
-
-                {marcadores.map((place) => (
-                  <MapMarker
-                    key={place.id}
-                    longitude={place.lng}
-                    latitude={place.lat}
-                  >
-                    <MarkerContent>
-                      <div className="size-5 cursor-pointer rounded-full border-2 border-white bg-red-500 shadow-lg transition-transform h-6 w-6 hover:scale-110">
-                        <p className="text-center text-white font-bold">U</p>
-                      </div>
-                      <MarkerLabel
-                        position="bottom"
-                        className=" rounded-2xl flex bg-white/35 p-1 gap-1.5 "
-                      >
-                        {place.label}
-                      </MarkerLabel>
-                    </MarkerContent>
-                    <MarkerPopup className="w-62 p-0">
-                      <div className="relative h-32 overflow-hidden rounded-t-md">
-                        <img
-                          src={place.image}
-                          alt={place.name}
-                          className="object-cover w-full h-full"
-                        />
-                      </div>
-                      <div className="space-y-2 p-3">
-                        <div>
-                          <p className="text-muted-foreground pb-0.5 text-[11px] font-medium tracking-wide uppercase">
-                            {place.category}
-                          </p>
-                          <h3 className="text-foreground leading-tight font-semibol">
-                            {place.name}
-                          </h3>
+                >
+                  <MapGeoJSON
+                    data={geoData}
+                    fillPaint={{
+                      "fill-color": ["get", "color"],
+                      "fill-opacity": 0.3,
+                    }}
+                    linePaint={{
+                      "line-color": ["get", "color"],
+                      "line-width": 2,
+                      "line-dasharray": [2, 2],
+                    }}
+                    interactive={true}
+                    onHover={(e) => {
+                      if (e && e.feature) {
+                        setHoverInfo({
+                          x: e.originalEvent.point.x,
+                          y: e.originalEvent.point.y,
+                          nome: e.feature.properties.name,
+                          casos: e.feature.properties.casos || 0,
+                        });
+                      } else {
+                        setHoverInfo(null);
+                      }
+                    }}
+                  />
+                  {marcadores.map((place) => (
+                    <MapMarker
+                      key={place.id}
+                      longitude={place.lng}
+                      latitude={place.lat}
+                    >
+                      <MarkerContent>
+                        <div className="size-5 cursor-pointer rounded-full border-2 border-white bg-red-500 shadow-lg transition-transform h-6 w-6 hover:scale-110">
+                          <p className="text-center text-white font-bold">U</p>
                         </div>
-                        <div className="flex items-center gap-3 text-sm">
-                          <div className="flex items-center gap-1">
-                            <Star className="size-3.5 fill-amber-400 text-amber-400" />
-                            <span className="font-medium">{place.rating}</span>
-                            <span className="text-muted-foreground">
-                              ({place.reviews.toLocaleString()})
-                            </span>
+                        <MarkerLabel
+                          position="bottom"
+                          className=" rounded-2xl flex bg-white/35 p-1 gap-1.5 "
+                        >
+                          {place.label}
+                        </MarkerLabel>
+                      </MarkerContent>
+                      <MarkerPopup className="w-62 p-0">
+                        <div className="relative h-32 overflow-hidden rounded-t-md">
+                          <img
+                            src={place.image}
+                            alt={place.name}
+                            className="object-cover w-full h-full"
+                          />
+                        </div>
+                        <div className="space-y-2 p-3">
+                          <div>
+                            <p className="text-muted-foreground pb-0.5 text-[11px] font-medium tracking-wide uppercase">
+                              {place.category}
+                            </p>
+                            <h3 className="text-foreground leading-tight font-semibol">
+                              {place.name}
+                            </h3>
+                          </div>
+                          <div className="flex items-center gap-3 text-sm">
+                            <div className="flex items-center gap-1">
+                              <Star className="size-3.5 fill-amber-400 text-amber-400" />
+                              <span className="font-medium">
+                                {place.rating}
+                              </span>
+                              <span className="text-muted-foreground">
+                                ({place.reviews.toLocaleString()})
+                              </span>
+                            </div>
+                          </div>
+                          <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                            <Clock className="size-3.5" />
+                            <span>{place.hours}</span>
+                          </div>
+                          <div className="flex gap-2 pt-1">
+                            <Button size="sm" className="flex-1">
+                              <Navigation className="size-3.5" />
+                              Directions
+                            </Button>
+                            <Button size="icon-sm" variant="outline">
+                              <ExternalLink className="size-3.5" />
+                            </Button>
                           </div>
                         </div>
-                        <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-                          <Clock className="size-3.5" />
-                          <span>{place.hours}</span>
-                        </div>
-                        <div className="flex gap-2 pt-1">
-                          <Button size="sm" className="flex-1">
-                            <Navigation className="size-3.5" />
-                            Directions
-                          </Button>
-                          <Button size="icon-sm" variant="outline">
-                            <ExternalLink className="size-3.5" />
-                          </Button>
-                        </div>
-                      </div>
-                    </MarkerPopup>
-                  </MapMarker>
-                ))}
-              </Map>
+                      </MarkerPopup>
+                    </MapMarker>
+                  ))}
+                </Map>
+                {hoverInfo && (
+                  <div
+                    className="absolute z-50 bg-white/95 backdrop-blur-sm p-3 rounded-lg shadow-xl border border-slate-200 pointer-events-none transition-opacity duration-150"
+                    style={{
+                      left: `${hoverInfo.x + 15}px`,
+                      top: `${hoverInfo.y + 15}px`,
+                    }}
+                  >
+                    <h4 className="font-bold text-slate-800 text-sm">
+                      {hoverInfo.nome}
+                    </h4>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-slate-600 text-xs font-medium">
+                        Casos registrados:
+                      </span>
+                      <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-bold">
+                        {hoverInfo.casos}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
 
             <ButtonTheme
