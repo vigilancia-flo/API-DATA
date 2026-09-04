@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "PERIMETRO_URBANO_FLORIANO",
+        "name": "PERÍMETRO URBANO DE FLORIANO",
         "color": "#808080",
         "fill": "rgba(197, 197, 197, 1)"
       },
@@ -270,9 +270,9 @@
         ]
       },
       "properties": {
-        "name": "Polígono 4",
+        "name": "ÁREA UBS DIRCEU ARCOVERDE",
         "styleUrl": "#poly-1A237E-2301-219-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#1a237e",
         "stroke-opacity": 1,
         "stroke": "#1a237e",
@@ -312,7 +312,7 @@
       "properties": {
         "name": "ÁREA UBS FLORIANO",
         "styleUrl": "#poly-0F9D58-2001-201-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#0f9d58",
         "stroke-opacity": 1,
         "stroke": "#0f9d58",
@@ -407,7 +407,7 @@
       "properties": {
         "name": "ÁREA UBS CAMILO FILHO",
         "styleUrl": "#poly-880E4F-1200-201-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#880e4f",
         "stroke-opacity": 1,
         "stroke": "#880e4f",
@@ -435,7 +435,7 @@
       "properties": {
         "name": "ÁREA UBS PAM",
         "styleUrl": "#poly-F9A825-1200-214-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#f9a825",
         "stroke-opacity": 1,
         "stroke": "#f9a825",
@@ -493,7 +493,7 @@
       "properties": {
         "name": "ÁREA UBS SANTA CRUZ",
         "styleUrl": "#poly-817717-1200-207-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#817717",
         "stroke-opacity": 1,
         "stroke": "#817717",
@@ -542,7 +542,7 @@
       "properties": {
         "name": "ÁREA UBS NOSSA SENHORA DA GUIA",
         "styleUrl": "#poly-0F9D58-1200-184-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#0f9d58",
         "stroke-opacity": 1,
         "stroke": "#0f9d58",
@@ -703,7 +703,7 @@
       "properties": {
         "name": "ÁREA UBS HELVIDÍO DE HOLANDA BARROS",
         "styleUrl": "#poly-F57C00-1200-191-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#f57c00",
         "stroke-opacity": 1,
         "stroke": "#f57c00",
@@ -747,7 +747,7 @@
       "properties": {
         "name": "ÁREA UBS THEODORO FERREIRA SOBRAL",
         "styleUrl": "#poly-7CB342-1200-184-nodesc",
-        "fill-opacity": 0.7215686274509804,
+        "fill-opacity": 0.2,
         "fill": "#7cb342",
         "stroke-opacity": 1,
         "stroke": "#7cb342",
@@ -812,7 +812,7 @@
       "properties": {
         "name": "ÁREA UBS JOÃO ELIAS OKA",
         "styleUrl": "#poly-9C27B0-1200-230-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#9c27b0",
         "stroke-opacity": 1,
         "stroke": "#9c27b0",
@@ -856,7 +856,7 @@
       "properties": {
         "name": "ÁREA UBS VIANA DE CARVALHO",
         "styleUrl": "#poly-C2185B-1200-224-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#c2185b",
         "stroke-opacity": 1,
         "stroke": "#c2185b",
@@ -897,7 +897,7 @@
       "properties": {
         "name": "ÁREA UBS JOSÉ PARAGUASSÚ",
         "styleUrl": "#poly-87CEAC-1200-189-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#87ceac",
         "stroke-opacity": 1,
         "stroke": "#87ceac",
@@ -957,11 +957,11 @@
       "properties": {
         "name": "ÁREA UBS PAULO MARTINS",
         "styleUrl": "#poly-E6EE9C-1200-201-nodesc",
-        "fill-opacity": 0.4,
         "fill": "#e6ee9c",
         "stroke-opacity": 1,
         "stroke": "#e6ee9c",
-        "stroke-width": 1.2
+        "stroke-width": 1.2,
+        "fill-opacity": 0.2
       }
     },
     {
@@ -1076,7 +1076,7 @@
       "properties": {
         "name": "ÁREA DA UBS JASMINA BUCAR",
         "styleUrl": "#poly-097138-1200-171-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#097138",
         "stroke-opacity": 1,
         "stroke": "#097138",
@@ -1123,7 +1123,7 @@
       "properties": {
         "name": "ÁREA DA UBS PEDRO SIMPLÍCIO",
         "styleUrl": "#poly-0288D1-1200-184-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#0288d1",
         "stroke-opacity": 1,
         "stroke": "#0288d1",
@@ -1173,7 +1173,7 @@
       "properties": {
         "name": "ÁREA UBS ALFREDO DE CARVALHO",
         "styleUrl": "#poly-FFEA00-1200-158-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         "fill": "#ffea00",
         "stroke-opacity": 1,
         "stroke": "#ffea00",
@@ -1182,7 +1182,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS L3",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1210,7 +1213,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS LEONARDO DUDIMA",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1242,7 +1248,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS MORRINHOS",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1278,7 +1287,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS MARGARIDA ALVES",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1301,7 +1313,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS PROTÁSIO DE MORAES",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1335,7 +1350,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS RAIMUNDO BENVINDO LIMA",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1362,7 +1380,10 @@
     },
     {
       "type": "Feature",
-      "properties": {},
+      "properties": {
+        "name": "ÁREA UBS RETIRO AMOLAR",
+        "color": "#EAEAE9"
+      },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
@@ -1474,7 +1495,7 @@
       "properties": {
         "name": "ÁREA DA UBS LUIZ TAVARES",
         "styleUrl": "#poly-FFEA00-601-31-nodesc",
-        "fill-opacity": 0.12156862745098039,
+        "fill-opacity": 0.2,
         "fill": "#ffea00",
         "stroke-opacity": 1,
         "stroke": "#ffea00",

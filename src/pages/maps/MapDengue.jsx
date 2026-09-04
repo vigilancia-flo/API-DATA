@@ -36,6 +36,8 @@ import pedroSimplicio from "../../assets/ubs/pedroSimplicio.jpg";
 import alfedroCarvalho from "../../assets/ubs/alfredoCarvalho.jpg";
 import RaimundoFilho from "../../assets/ubs/ubsRaimundoFilho.png";
 import TheodoroSobral from "../../assets/ubs/theodoroSobral.png";
+import pauloKalume from "../../assets/ubs/pauloKalume.png";
+import camiloFilho from "../../assets/ubs/camiloFilho.png";
 // imagens das ubs do perimetro rural
 import MargaridaAlvez from "../../assets/ubs/MargaridaAlvez.jpeg";
 import RaimundoBenvindoLima from "../../assets/ubs/RaimundoBenvindoLima.jpeg";
@@ -81,7 +83,7 @@ const bairrosFlorianoGeoJSON = {
     {
       type: "Feature",
       properties: {
-        name: "PERIMETRO URBANO FLORIANO",
+        name: "PERÍMETRO URBANO DE FLORIANO",
         color: "#808080",
         fill: "rgba(197, 197, 197, 1)",
       },
@@ -347,9 +349,9 @@ const bairrosFlorianoGeoJSON = {
         ],
       },
       properties: {
-        name: "Polígono 4",
+        name: "ÁREA UBS DIRCEU ARCOVERDE",
         styleUrl: "#poly-1A237E-2301-219-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#1a237e",
         "stroke-opacity": 1,
         stroke: "#1a237e",
@@ -389,7 +391,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS FLORIANO",
         styleUrl: "#poly-0F9D58-2001-201-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#0f9d58",
         "stroke-opacity": 1,
         stroke: "#0f9d58",
@@ -484,7 +486,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS CAMILO FILHO",
         styleUrl: "#poly-880E4F-1200-201-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#880e4f",
         "stroke-opacity": 1,
         stroke: "#880e4f",
@@ -512,7 +514,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS PAM",
         styleUrl: "#poly-F9A825-1200-214-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#f9a825",
         "stroke-opacity": 1,
         stroke: "#f9a825",
@@ -570,7 +572,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS SANTA CRUZ",
         styleUrl: "#poly-817717-1200-207-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#817717",
         "stroke-opacity": 1,
         stroke: "#817717",
@@ -619,7 +621,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS NOSSA SENHORA DA GUIA",
         styleUrl: "#poly-0F9D58-1200-184-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#0f9d58",
         "stroke-opacity": 1,
         stroke: "#0f9d58",
@@ -780,7 +782,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS HELVIDÍO DE HOLANDA BARROS",
         styleUrl: "#poly-F57C00-1200-191-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#f57c00",
         "stroke-opacity": 1,
         stroke: "#f57c00",
@@ -824,7 +826,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS THEODORO FERREIRA SOBRAL",
         styleUrl: "#poly-7CB342-1200-184-nodesc",
-        "fill-opacity": 0.7215686274509804,
+        "fill-opacity": 0.2,
         fill: "#7cb342",
         "stroke-opacity": 1,
         stroke: "#7cb342",
@@ -889,7 +891,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS JOÃO ELIAS OKA",
         styleUrl: "#poly-9C27B0-1200-230-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#9c27b0",
         "stroke-opacity": 1,
         stroke: "#9c27b0",
@@ -933,7 +935,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS VIANA DE CARVALHO",
         styleUrl: "#poly-C2185B-1200-224-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#c2185b",
         "stroke-opacity": 1,
         stroke: "#c2185b",
@@ -974,7 +976,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS JOSÉ PARAGUASSÚ",
         styleUrl: "#poly-87CEAC-1200-189-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#87ceac",
         "stroke-opacity": 1,
         stroke: "#87ceac",
@@ -1034,11 +1036,11 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS PAULO MARTINS",
         styleUrl: "#poly-E6EE9C-1200-201-nodesc",
-        "fill-opacity": 0.4,
         fill: "#e6ee9c",
         "stroke-opacity": 1,
         stroke: "#e6ee9c",
         "stroke-width": 1.2,
+        "fill-opacity": 0.2,
       },
     },
     {
@@ -1153,7 +1155,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA DA UBS JASMINA BUCAR",
         styleUrl: "#poly-097138-1200-171-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#097138",
         "stroke-opacity": 1,
         stroke: "#097138",
@@ -1200,7 +1202,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA DA UBS PEDRO SIMPLÍCIO",
         styleUrl: "#poly-0288D1-1200-184-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#0288d1",
         "stroke-opacity": 1,
         stroke: "#0288d1",
@@ -1250,7 +1252,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS ALFREDO DE CARVALHO",
         styleUrl: "#poly-FFEA00-1200-158-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#ffea00",
         "stroke-opacity": 1,
         stroke: "#ffea00",
@@ -1259,7 +1261,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS L3",
+        color: "#EAEAE9",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1287,7 +1292,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS LEONARDO DUDIMA",
+        color: "#EAEAE9",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1319,7 +1327,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS MORRINHOS",
+        color: "#EAEAE9",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1355,7 +1366,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS MARGARIDA ALVES",
+        color: "#EAEAE9",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1378,7 +1392,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS PROTÁSIO DE MORAES",
+        color: "#EAEAE9",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1412,7 +1429,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS RAIMUNDO BENVINDO LIMA",
+        color: "#EAEAE9",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1439,7 +1459,10 @@ const bairrosFlorianoGeoJSON = {
     },
     {
       type: "Feature",
-      properties: {},
+      properties: {
+        name: "ÁREA UBS RETIRO AMOLAR",
+        color: "#EAEAE9",
+      },
       geometry: {
         type: "Polygon",
         coordinates: [
@@ -1551,7 +1574,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA DA UBS LUIZ TAVARES",
         styleUrl: "#poly-FFEA00-601-31-nodesc",
-        "fill-opacity": 0.12156862745098039,
+        "fill-opacity": 0.2,
         fill: "#ffea00",
         "stroke-opacity": 1,
         stroke: "#ffea00",
@@ -1732,6 +1755,46 @@ const marcadores = [
     lng: -43.01058274720951,
     lat: -6.764758882936275,
   },
+  {
+    id: "camiloFilho",
+    name: "Posto de Saúde Camilo Filho",
+    label: "Posto de Saúde Camilo Filho",
+    category: "UBS",
+    rating: 4,
+    reviews: 2,
+    hours: "07:00 AM - 5:00 PM",
+    color: "#8b5cf6",
+    image: camiloFilho,
+    lng: -43.04194310195003,
+    lat: -6.78623928806005,
+  },
+  {
+    id: "pauloKalume",
+    name: "Posto de Saúde Paulo Kalume",
+    label: "Posto de Saúde Paulo Kalume",
+    category: "UBS",
+    rating: 4,
+    reviews: 2,
+    hours: "07:00 AM - 5:00 PM",
+    color: "#8b5cf6",
+    image: pauloKalume,
+    lng: -43.00642190016104,
+    lat: -6.778271099329543,
+  },
+  {
+    id: "nossaSenhoraGuia",
+    name: "UBS Nossa Senhora da Guia",
+    label: "UBS Nossa Senhora da Guia",
+    category: "UBS",
+    rating: 4,
+    reviews: 2,
+    hours: "07:00 AM - 5:00 PM",
+    color: "#8b5cf6",
+    image: VianaCarvalho,
+    lng: -43.009957159718944,
+    lat: -6.801771476889063,
+  },
+
   // =========== UBSs da zona rural ===========
   {
     id: "margarida",
@@ -1834,8 +1897,12 @@ export default function MapDengue() {
   const [geoData, setGeoData] = useState(bairrosFlorianoGeoJSON);
   const [loading, setLoading] = useState(true);
 
+  const [hoverInfo, setHoverInfo] = useState(null);
+
   const [todosPacientes, setTodosPacientes] = useState([]);
   const [endemiaSelecionada, setEndemiaSelecionada] = useState("dengue");
+
+  const [zoomAtual, setZoomAtual] = useState(13.5);
 
   const is3D = activeStyle === "openstreetmap3d";
   const navigate = useNavigate();
@@ -1869,55 +1936,134 @@ export default function MapDengue() {
       });
   }, []);
 
+  // Função que lida com o endereço unificado do backend (ignorando o CEP)
+  const extrairBairro = (endereco) => {
+    if (!endereco) return "";
+    const partes = endereco.split(",");
+    if (partes.length === 1) return "";
+
+    let bairroStr = partes[partes.length - 1].trim();
+    // Se a última parte for número (CEP), pega a penúltima (Bairro)
+    if (/^[0-9-]+$/.test(bairroStr) && partes.length > 2) {
+      bairroStr = partes[partes.length - 2].trim();
+    }
+
+    return bairroStr
+      .toUpperCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, ""); // Retorna sem acentos e maiúsculo
+  };
+
   useEffect(() => {
     if (todosPacientes.length === 0) return;
 
     const pacientesFiltrados = todosPacientes.filter((p) => {
       const agravo = p.id_agravo ? p.id_agravo.toUpperCase() : "";
 
-      if (endemiaSelecionada === "dengue") {
+      if (endemiaSelecionada === "dengue")
         return agravo.includes("A90") || agravo === "";
-      }
-      if (endemiaSelecionada === "sifilis") {
+      if (endemiaSelecionada === "sifilis")
         return (
           agravo.includes("A51") ||
           agravo.includes("A52") ||
           agravo.includes("A53")
         );
-      }
-      if (endemiaSelecionada === "tuberculose") {
+      if (endemiaSelecionada === "tuberculose")
         return agravo.includes("A15") || agravo.includes("A16");
-      }
-      if (endemiaSelecionada === "gerais") {
-        return true;
-      }
+      if (endemiaSelecionada === "gerais") return true;
 
       return true;
     });
 
-    const contagemPorBairro = {};
+    // 1. DICIONÁRIO BAIRRO -> ÁREA UBS
+    const bairroParaAreaUbs = {
+      CENTRO: "AREA UBS FLORIANO",
+      SAMBAIBA: "AREA UBS DIRCEU ARCOVERDE",
+      "SAMBAIBA VELHA": "AREA UBS DIRCEU ARCOVERDE",
+      MANGUINHA: "AREA UBS JOSE PARAGUASSU",
+      "ALTO DA CRUZ": "AREA UBS THEODORO FERREIRA SOBRAL",
+      "CAMPO VELHO": "AREA DA UBS PEDRO SIMPLICIO",
+      "REDE NOVA": "AREA UBS ALFREDO DE CARVALHO",
+      TABOCA: "AREA DA UBS LUIZ TAVARES",
+      "IRAPUA I": "AREA UBS CAMILO FILHO",
+      "IRAPUA II": "AREA UBS CAMILO FILHO",
+      "NOSSA SENHORA DA GUIA": "AREA UBS NOSSA SENHORA DA GUIA",
+      TIBERAO: "AREA UBS RAIMUNDO FILHO",
+
+      // --- BAIRROS NOVOS ADICIONADOS DO CONSOLE ---
+      "BOM LUGAR": "AREA UBS PAULO KALUME",
+      "BOSQUE SANTA TEREZINHA": "AREA UBS JOAO ELIAS OKA",
+      "CAIXA D AGUA": "AREA UBS THEODORO FERREIRA SOBRAL",
+      CAJUEIRO: "AREA UBS JOAO ELIAS OKA",
+      "ALTO DA GUIA": "AREA UBS NOSSA SENHORA DA GUIA",
+      CURADOR: "AREA UBS THEODORO FERREIRA SOBRAL",
+      IBIAPABA: "AREA UBS VIANA DE CARVALHO",
+      "PAU FERRADO": "AREA UBS PAULO MARTINS",
+      "SAO BORJA": "AREA DA UBS PEDRO SIMPLICIO", // CORREÇÃO: Faltava o "DA"
+      "PLANALTO SAMBAIBA": "AREA UBS DIRCEU ARCOVERDE",
+      CATUMBI: "AREA UBS RAIMUNDO FILHO",
+      "SAO CRISTOVAO": "AREA UBS FLORIANO",
+      TAMBORIL: "AREA UBS ALFREDO DE CARVALHO",
+      "CONJUNTO  PARAISO": "AREA DA UBS JASMINA BUCAR", // CORREÇÃO: Removido os acentos
+      CANCELA: "AREA UBS PAULO KALUME", // CORREÇÃO: Removido o "DA"
+      CANOAS: "AREA UBS JOSE PARAGUASSU", // CORREÇÃO: Removido os acentos
+      "PLANALTO BELA VISTA": "AREA DA UBS PEDRO SIMPLICIO", // CORREÇÃO: Removido os acentos
+
+      // --- ERROS DE DIGITAÇÃO / SINAN ---
+      MELADAO: "AREA DA UBS PEDRO SIMPLICIO",
+      VIAZUL: "AREA UBS RAIMUNDO FILHO",
+      "PEDRO SIMPLICIO": "AREA DA UBS PEDRO SIMPLICIO",
+
+      // --- CEPS SOLTOS ---
+      64800280: "AREA UBS HELVIDIO DE HOLANDA BARROS", // CORREÇÃO: Removido os acentos
+      64800850: "AREA UBS DIRCEU ARCOVERDE",
+      64800000: "AREA UBS FLORIANO",
+    };
+
+    const contagemPorArea = {};
+
+    // 2. CONTAGEM
     pacientesFiltrados.forEach((paciente) => {
       if (paciente.endereco) {
-        const partes = paciente.endereco.split(",");
-        const bairroStr = partes[partes.length - 1].trim().toUpperCase();
-        const bairroNormalizado = bairroStr
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
-        contagemPorBairro[bairroNormalizado] =
-          (contagemPorBairro[bairroNormalizado] || 0) + 1;
+        const bairroNormalizado = extrairBairro(paciente.endereco);
+
+        // Pega o nome da UBS correspondente ao bairro do paciente
+        const nomeAreaMapa = bairroParaAreaUbs[bairroNormalizado];
+
+        if (nomeAreaMapa) {
+          contagemPorArea[nomeAreaMapa] =
+            (contagemPorArea[nomeAreaMapa] || 0) + 1;
+        } else {
+          // Descomente a linha abaixo para ver no console (F12) quais bairros faltam no dicionário
+          // console.warn("Bairro sem UBS mapeada no dicionário:", bairroNormalizado);
+        }
       }
     });
 
+    // 3. INJEÇÃO DOS DADOS NO MAPA
     const updatedFeatures = bairrosFlorianoGeoJSON.features.map((feature) => {
-      // Busca a cor em 'fill' (padrão exportado) ou 'color', com um fallback padrão
       const corOriginal =
         feature.properties.fill || feature.properties.color || "#808080";
+      const nomeOriginal = feature.properties.name || "";
+
+      let numeroCasos = 0;
+
+      if (nomeOriginal) {
+        const nomeAreaGeoJSON = nomeOriginal
+          .toUpperCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+
+        // Puxa do objeto que acabamos de montar a contagem agrupada
+        numeroCasos = contagemPorArea[nomeAreaGeoJSON] || 0;
+      }
 
       return {
         ...feature,
         properties: {
           ...feature.properties,
-          color: corOriginal, // Alimenta a propriedade 'color' que o Maplibre vai ler
+          color: corOriginal,
+          casos: numeroCasos,
         },
       };
     });
@@ -1936,7 +2082,7 @@ export default function MapDengue() {
               Mapa Epidemiológico Setorial
             </h1>
             <p className="text-sm text-white font-medium mt-0.5">
-              Densidade de Casos por Bairro - Floriano, PI
+              Densidade de Casos por UBS - Floriano, PI
             </p>
           </div>
         </header>
@@ -1953,91 +2099,131 @@ export default function MapDengue() {
                 <Activity className="size-8 text-blue-500 animate-spin" />
               </div>
             ) : (
-              <Map
-                ref={mapRef}
-                center={[-43.0225, -6.7672]}
-                zoom={13.5}
-                mapStyle={MAP_STYLES[activeStyle]}
-                styles={{
-                  light: MAP_STYLES[activeStyle] || MAP_STYLES.light,
-                  dark: MAP_STYLES[activeStyle] || MAP_STYLES.dark,
-                }}
-              >
-                {/* estilo do maps */}
-                <MapGeoJSON
-                  data={geoData}
-                  fillPaint={{
-                    "fill-color": ["get", "color"],
-                    "fill-opacity": 0.3,
+              <div className="relative w-full h-full">
+                <Map
+                  ref={mapRef}
+                  center={[-43.0225, -6.7672]}
+                  zoom={13.5}
+                  onViewportChange={(viewport) => setZoomAtual(viewport.zoom)}
+                  mapStyle={MAP_STYLES[activeStyle]}
+                  styles={{
+                    light: MAP_STYLES[activeStyle] || MAP_STYLES.light,
+                    dark: MAP_STYLES[activeStyle] || MAP_STYLES.dark,
                   }}
-                  linePaint={{
-                    "line-color": ["get", "color"],
-                    "line-width": 2,
-                    "line-dasharray": [2, 2],
-                  }}
-                />
-
-                {marcadores.map((place) => (
-                  <MapMarker
-                    key={place.id}
-                    longitude={place.lng}
-                    latitude={place.lat}
-                  >
-                    <MarkerContent>
-                      <div className="size-5 cursor-pointer rounded-full border-2 border-white bg-red-500 shadow-lg transition-transform h-6 w-6 hover:scale-110">
-                        <p className="text-center text-white font-bold">U</p>
-                      </div>
-                      <MarkerLabel
-                        position="bottom"
-                        className=" rounded-2xl flex bg-white/35 p-1 gap-1.5 "
-                      >
-                        {place.label}
-                      </MarkerLabel>
-                    </MarkerContent>
-                    <MarkerPopup className="w-62 p-0">
-                      <div className="relative h-32 overflow-hidden rounded-t-md">
-                        <img
-                          src={place.image}
-                          alt={place.name}
-                          className="object-cover w-full h-full"
-                        />
-                      </div>
-                      <div className="space-y-2 p-3">
-                        <div>
-                          <p className="text-muted-foreground pb-0.5 text-[11px] font-medium tracking-wide uppercase">
-                            {place.category}
-                          </p>
-                          <h3 className="text-foreground leading-tight font-semibol">
-                            {place.name}
-                          </h3>
+                >
+                  <MapGeoJSON
+                    data={geoData}
+                    fillPaint={{
+                      "fill-color": ["get", "color"],
+                      "fill-opacity": 0.3,
+                    }}
+                    linePaint={{
+                      "line-color": ["get", "color"],
+                      "line-width": 2,
+                      "line-dasharray": [2, 2],
+                    }}
+                    interactive={true}
+                    onHover={(e) => {
+                      if (e && e.feature) {
+                        setHoverInfo({
+                          x: e.originalEvent.point.x,
+                          y: e.originalEvent.point.y,
+                          nome: e.feature.properties.name,
+                          casos: e.feature.properties.casos || 0,
+                        });
+                      } else {
+                        setHoverInfo(null);
+                      }
+                    }}
+                  />
+                  {marcadores.map((place) => (
+                    <MapMarker
+                      key={place.id}
+                      longitude={place.lng}
+                      latitude={place.lat}
+                    >
+                      <MarkerContent>
+                        <div className="size-5 cursor-pointer rounded-full border-2 border-white bg-red-500 shadow-lg transition-transform h-6 w-6 hover:scale-110">
+                          <p className="text-center text-white font-bold">U</p>
                         </div>
-                        <div className="flex items-center gap-3 text-sm">
-                          <div className="flex items-center gap-1">
-                            <Star className="size-3.5 fill-amber-400 text-amber-400" />
-                            <span className="font-medium">{place.rating}</span>
-                            <span className="text-muted-foreground">
-                              ({place.reviews.toLocaleString()})
-                            </span>
+
+                        {zoomAtual >= 15 && (
+                          <MarkerLabel
+                            position="bottom"
+                            className=" rounded-2xl flex bg-white/35 p-1 gap-1.5 "
+                          >
+                            {place.label}
+                          </MarkerLabel>
+                        )}
+                      </MarkerContent>
+                      <MarkerPopup className="w-62 p-0">
+                        <div className="relative h-32 overflow-hidden rounded-t-md">
+                          <img
+                            src={place.image}
+                            alt={place.name}
+                            className="object-cover w-full h-full"
+                          />
+                        </div>
+                        <div className="space-y-2 p-3">
+                          <div>
+                            <p className="text-muted-foreground pb-0.5 text-[11px] font-medium tracking-wide uppercase">
+                              {place.category}
+                            </p>
+                            <h3 className="text-foreground leading-tight font-semibol">
+                              {place.name}
+                            </h3>
+                          </div>
+                          <div className="flex items-center gap-3 text-sm">
+                            <div className="flex items-center gap-1">
+                              <Star className="size-3.5 fill-amber-400 text-amber-400" />
+                              <span className="font-medium">
+                                {place.rating}
+                              </span>
+                              <span className="text-muted-foreground">
+                                ({place.reviews.toLocaleString()})
+                              </span>
+                            </div>
+                          </div>
+                          <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                            <Clock className="size-3.5" />
+                            <span>{place.hours}</span>
+                          </div>
+                          <div className="flex gap-2 pt-1">
+                            <Button size="sm" className="flex-1">
+                              <Navigation className="size-3.5" />
+                              Directions
+                            </Button>
+                            <Button size="icon-sm" variant="outline">
+                              <ExternalLink className="size-3.5" />
+                            </Button>
                           </div>
                         </div>
-                        <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-                          <Clock className="size-3.5" />
-                          <span>{place.hours}</span>
-                        </div>
-                        <div className="flex gap-2 pt-1">
-                          <Button size="sm" className="flex-1">
-                            <Navigation className="size-3.5" />
-                            Directions
-                          </Button>
-                          <Button size="icon-sm" variant="outline">
-                            <ExternalLink className="size-3.5" />
-                          </Button>
-                        </div>
-                      </div>
-                    </MarkerPopup>
-                  </MapMarker>
-                ))}
-              </Map>
+                      </MarkerPopup>
+                    </MapMarker>
+                  ))}
+                </Map>
+                {hoverInfo && (
+                  <div
+                    className="absolute z-50 bg-white/95 backdrop-blur-sm p-3 rounded-lg shadow-xl border border-slate-200 pointer-events-none transition-opacity duration-150"
+                    style={{
+                      left: `${hoverInfo.x + 15}px`,
+                      top: `${hoverInfo.y + 15}px`,
+                    }}
+                  >
+                    <h4 className="font-bold text-slate-800 text-sm">
+                      {hoverInfo.nome}
+                    </h4>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-slate-600 text-xs font-medium">
+                        Casos registrados:
+                      </span>
+                      <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-bold">
+                        {hoverInfo.casos}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
 
             <ButtonTheme

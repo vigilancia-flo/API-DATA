@@ -24,17 +24,6 @@ export default function ButtonTheme({
           <option value="satellite">Satélite</option>
         </select>
       </div>
-      <button
-        onClick={toggleTheme}
-        className="bg-white/90 backdrop-blur-md p-3 rounded-full shadow-lg border border-slate-200/60 text-slate-700 hover:bg-slate-100 transition-all focus:outline-none focus:ring-2 focus:ring-rose-500 flex items-center justify-center"
-        aria-label="Alternar tema do mapa"
-      >
-        {activeStyle === "dark" ? (
-          <Sun className="size-5" />
-        ) : (
-          <Moon className="size-5" />
-        )}
-      </button>
     </div>
   );
 }

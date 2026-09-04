@@ -1182,6 +1182,7 @@ function MapGeoJSON({
           id: symbolLayerId,
           type: "symbol",
           source: sourceId,
+          minzoom: 16,
           layout: {
             "text-field": ["get", "name"],
             "text-size": 12,

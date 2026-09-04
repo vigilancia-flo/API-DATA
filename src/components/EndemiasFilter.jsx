@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Bug, Activity, ShieldAlert, ChevronDown } from "lucide-react";
+import { Bug, Activity, ShieldAlert, ChevronDown, MapPlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function EndemiasFilter({ selected, onChange }) {
@@ -10,8 +10,8 @@ export default function EndemiasFilter({ selected, onChange }) {
   const endemias = [
     {
       id: "gerais",
-      name: "Endemias Gerais",
-      icon: Bug,
+      name: "Território de UBS",
+      icon: MapPlus,
       color: "text-yellow-500",
       bg: "bg-yellow-100",
       rota: "/mapa-epidemiologico",
