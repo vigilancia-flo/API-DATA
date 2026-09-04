@@ -36,6 +36,8 @@ import pedroSimplicio from "../../assets/ubs/pedroSimplicio.jpg";
 import alfedroCarvalho from "../../assets/ubs/alfredoCarvalho.jpg";
 import RaimundoFilho from "../../assets/ubs/ubsRaimundoFilho.png";
 import TheodoroSobral from "../../assets/ubs/theodoroSobral.png";
+import pauloKalume from "../../assets/ubs/pauloKalume.png";
+import camiloFilho from "../../assets/ubs/camiloFilho.png";
 // imagens das ubs do perimetro rural
 import MargaridaAlvez from "../../assets/ubs/MargaridaAlvez.jpeg";
 import RaimundoBenvindoLima from "../../assets/ubs/RaimundoBenvindoLima.jpeg";
@@ -349,7 +351,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS DIRCEU ARCOVERDE",
         styleUrl: "#poly-1A237E-2301-219-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#1a237e",
         "stroke-opacity": 1,
         stroke: "#1a237e",
@@ -389,7 +391,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS FLORIANO",
         styleUrl: "#poly-0F9D58-2001-201-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#0f9d58",
         "stroke-opacity": 1,
         stroke: "#0f9d58",
@@ -482,9 +484,9 @@ const bairrosFlorianoGeoJSON = {
         ],
       },
       properties: {
-        name: "ÁREA CAMILO FILHO",
+        name: "ÁREA UBS CAMILO FILHO",
         styleUrl: "#poly-880E4F-1200-201-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#880e4f",
         "stroke-opacity": 1,
         stroke: "#880e4f",
@@ -512,7 +514,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS PAM",
         styleUrl: "#poly-F9A825-1200-214-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#f9a825",
         "stroke-opacity": 1,
         stroke: "#f9a825",
@@ -570,7 +572,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS SANTA CRUZ",
         styleUrl: "#poly-817717-1200-207-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#817717",
         "stroke-opacity": 1,
         stroke: "#817717",
@@ -619,7 +621,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS NOSSA SENHORA DA GUIA",
         styleUrl: "#poly-0F9D58-1200-184-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#0f9d58",
         "stroke-opacity": 1,
         stroke: "#0f9d58",
@@ -780,7 +782,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS HELVIDÍO DE HOLANDA BARROS",
         styleUrl: "#poly-F57C00-1200-191-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#f57c00",
         "stroke-opacity": 1,
         stroke: "#f57c00",
@@ -824,7 +826,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS THEODORO FERREIRA SOBRAL",
         styleUrl: "#poly-7CB342-1200-184-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#7cb342",
         "stroke-opacity": 1,
         stroke: "#7cb342",
@@ -889,7 +891,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS JOÃO ELIAS OKA",
         styleUrl: "#poly-9C27B0-1200-230-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#9c27b0",
         "stroke-opacity": 1,
         stroke: "#9c27b0",
@@ -933,7 +935,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS VIANA DE CARVALHO",
         styleUrl: "#poly-C2185B-1200-224-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#c2185b",
         "stroke-opacity": 1,
         stroke: "#c2185b",
@@ -974,7 +976,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS JOSÉ PARAGUASSÚ",
         styleUrl: "#poly-87CEAC-1200-189-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#87ceac",
         "stroke-opacity": 1,
         stroke: "#87ceac",
@@ -1034,11 +1036,11 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS PAULO MARTINS",
         styleUrl: "#poly-E6EE9C-1200-201-nodesc",
-        "fill-opacity": 0.4,
         fill: "#e6ee9c",
         "stroke-opacity": 1,
         stroke: "#e6ee9c",
         "stroke-width": 1.2,
+        "fill-opacity": 0.2,
       },
     },
     {
@@ -1151,9 +1153,9 @@ const bairrosFlorianoGeoJSON = {
         ],
       },
       properties: {
-        name: "ÁREA UBS JASMINA BUCAR",
+        name: "ÁREA DA UBS JASMINA BUCAR",
         styleUrl: "#poly-097138-1200-171-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#097138",
         "stroke-opacity": 1,
         stroke: "#097138",
@@ -1198,9 +1200,9 @@ const bairrosFlorianoGeoJSON = {
         ],
       },
       properties: {
-        name: "ÁREA UBS PEDRO SIMPLÍCIO",
+        name: "ÁREA DA UBS PEDRO SIMPLÍCIO",
         styleUrl: "#poly-0288D1-1200-184-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#0288d1",
         "stroke-opacity": 1,
         stroke: "#0288d1",
@@ -1250,7 +1252,7 @@ const bairrosFlorianoGeoJSON = {
       properties: {
         name: "ÁREA UBS ALFREDO DE CARVALHO",
         styleUrl: "#poly-FFEA00-1200-158-nodesc",
-        "fill-opacity": 0.4,
+        "fill-opacity": 0.2,
         fill: "#ffea00",
         "stroke-opacity": 1,
         stroke: "#ffea00",
@@ -1261,7 +1263,7 @@ const bairrosFlorianoGeoJSON = {
       type: "Feature",
       properties: {
         name: "ÁREA UBS L3",
-        color: "#808080",
+        color: "#EAEAE9",
       },
       geometry: {
         type: "Polygon",
@@ -1292,7 +1294,7 @@ const bairrosFlorianoGeoJSON = {
       type: "Feature",
       properties: {
         name: "ÁREA UBS LEONARDO DUDIMA",
-        color: "#808080",
+        color: "#EAEAE9",
       },
       geometry: {
         type: "Polygon",
@@ -1327,7 +1329,7 @@ const bairrosFlorianoGeoJSON = {
       type: "Feature",
       properties: {
         name: "ÁREA UBS MORRINHOS",
-        color: "#808080",
+        color: "#EAEAE9",
       },
       geometry: {
         type: "Polygon",
@@ -1366,7 +1368,7 @@ const bairrosFlorianoGeoJSON = {
       type: "Feature",
       properties: {
         name: "ÁREA UBS MARGARIDA ALVES",
-        color: "#808080",
+        color: "#EAEAE9",
       },
       geometry: {
         type: "Polygon",
@@ -1392,7 +1394,7 @@ const bairrosFlorianoGeoJSON = {
       type: "Feature",
       properties: {
         name: "ÁREA UBS PROTÁSIO DE MORAES",
-        color: "#808080",
+        color: "#EAEAE9",
       },
       geometry: {
         type: "Polygon",
@@ -1429,7 +1431,7 @@ const bairrosFlorianoGeoJSON = {
       type: "Feature",
       properties: {
         name: "ÁREA UBS RAIMUNDO BENVINDO LIMA",
-        color: "#808080",
+        color: "#EAEAE9",
       },
       geometry: {
         type: "Polygon",
@@ -1459,7 +1461,7 @@ const bairrosFlorianoGeoJSON = {
       type: "Feature",
       properties: {
         name: "ÁREA UBS RETIRO AMOLAR",
-        color: "#808080",
+        color: "#EAEAE9",
       },
       geometry: {
         type: "Polygon",
@@ -1570,9 +1572,9 @@ const bairrosFlorianoGeoJSON = {
         ],
       },
       properties: {
-        name: "ÁREA UBS LUIZ TAVARES",
+        name: "ÁREA DA UBS LUIZ TAVARES",
         styleUrl: "#poly-FFEA00-601-31-nodesc",
-        "fill-opacity": 0.12156862745098039,
+        "fill-opacity": 0.2,
         fill: "#ffea00",
         "stroke-opacity": 1,
         stroke: "#ffea00",
@@ -1762,7 +1764,7 @@ const marcadores = [
     reviews: 2,
     hours: "07:00 AM - 5:00 PM",
     color: "#8b5cf6",
-    image: VianaCarvalho,
+    image: camiloFilho,
     lng: -43.04194310195003,
     lat: -6.78623928806005,
   },
@@ -1775,7 +1777,7 @@ const marcadores = [
     reviews: 2,
     hours: "07:00 AM - 5:00 PM",
     color: "#8b5cf6",
-    image: VianaCarvalho,
+    image: pauloKalume,
     lng: -43.00642190016104,
     lat: -6.778271099329543,
   },
@@ -1900,6 +1902,8 @@ export default function MapDengue() {
   const [todosPacientes, setTodosPacientes] = useState([]);
   const [endemiaSelecionada, setEndemiaSelecionada] = useState("dengue");
 
+  const [zoomAtual, setZoomAtual] = useState(13.5);
+
   const is3D = activeStyle === "openstreetmap3d";
   const navigate = useNavigate();
 
@@ -1986,37 +1990,34 @@ export default function MapDengue() {
       "NOSSA SENHORA DA GUIA": "AREA UBS NOSSA SENHORA DA GUIA",
       TIBERAO: "AREA UBS RAIMUNDO FILHO",
 
-      // --- BAIRROS NOVOS ADICIONADOS DO CONSOLE (AJUSTE A UBS CORRESPONDENTE) ---
+      // --- BAIRROS NOVOS ADICIONADOS DO CONSOLE ---
       "BOM LUGAR": "AREA UBS PAULO KALUME",
       "BOSQUE SANTA TEREZINHA": "AREA UBS JOAO ELIAS OKA",
       "CAIXA D AGUA": "AREA UBS THEODORO FERREIRA SOBRAL",
-      CAJUEIRO: "AREA UBS JOAO ELIAS OKA", // <- Exemplo
+      CAJUEIRO: "AREA UBS JOAO ELIAS OKA",
       "ALTO DA GUIA": "AREA UBS NOSSA SENHORA DA GUIA",
       CURADOR: "AREA UBS THEODORO FERREIRA SOBRAL",
       IBIAPABA: "AREA UBS VIANA DE CARVALHO",
-      "PAU FERRADO": "AREA UBS PAULO MARTINS", // <- Exemplo
-      "SAO BORJA": "AREA UBS PEDRO SIMPLICIO",
+      "PAU FERRADO": "AREA UBS PAULO MARTINS",
+      "SAO BORJA": "AREA DA UBS PEDRO SIMPLICIO", // CORREÇÃO: Faltava o "DA"
       "PLANALTO SAMBAIBA": "AREA UBS DIRCEU ARCOVERDE",
-      CATUMBI: "AREA UBS HELVIDIO DE HOLANDA BARROS", // <- Exemplo
-      "SAO CRISTOVAO": "AREA UBS FLORIANO", // <- Exemplo
-      TAMBORIL: "AREA UBS JOSE PARAGUASSU", // <- Exemplo
-      "CONJUNTO  PARAISO": "AREA UBS PAULO KALUME", // exemplo
-      CANCELA: "AREA DA UBS PEDRO SIMPLICIO", // <- Exemplo
-      CANOAS: "AREA UBS FLORIANO", // <- Exemplo
-      "PLANALTO BELA VISTA": "AREA UBS CAMILO FILHO", // <- Exemplo
+      CATUMBI: "AREA UBS RAIMUNDO FILHO",
+      "SAO CRISTOVAO": "AREA UBS FLORIANO",
+      TAMBORIL: "AREA UBS ALFREDO DE CARVALHO",
+      "CONJUNTO  PARAISO": "AREA DA UBS JASMINA BUCAR", // CORREÇÃO: Removido os acentos
+      CANCELA: "AREA UBS PAULO KALUME", // CORREÇÃO: Removido o "DA"
+      CANOAS: "AREA UBS JOSE PARAGUASSU", // CORREÇÃO: Removido os acentos
+      "PLANALTO BELA VISTA": "AREA DA UBS PEDRO SIMPLICIO", // CORREÇÃO: Removido os acentos
 
       // --- ERROS DE DIGITAÇÃO / SINAN ---
-      MELADO: "AREA DA UBS PEDRO SIMPLICIO", // Provável "Meladão"
       MELADAO: "AREA DA UBS PEDRO SIMPLICIO",
-      "VIA AZUL": "AREA UBS RAIMUNDO FILHO", // Provável "Viazul"
       VIAZUL: "AREA UBS RAIMUNDO FILHO",
-      "PEDRO SIMPLICIO": "AREA DA UBS PEDRO SIMPLICIO", // Inseriram a UBS no lugar do bairro
+      "PEDRO SIMPLICIO": "AREA DA UBS PEDRO SIMPLICIO",
 
-      // --- CEPS SOLTOS (Se possível, mapeie para a UBS daquele CEP) ---
-      64800280: "AREA UBS DIRCEU ARCOVERDE", // Exemplo: Rua do Sambaíba
-      64800850: "AREA UBS RAIMUNDO FILHO", // Exemplo: Rua do Tiberão
-      64800860: "AREA UBS RAIMUNDO FILHO", // Exemplo: Rua do Tiberão
-      64800000: "AREA UBS FLORIANO", // CEP Geral
+      // --- CEPS SOLTOS ---
+      64800280: "AREA UBS HELVIDIO DE HOLANDA BARROS", // CORREÇÃO: Removido os acentos
+      64800850: "AREA UBS DIRCEU ARCOVERDE",
+      64800000: "AREA UBS FLORIANO",
     };
 
     const contagemPorArea = {};
@@ -2103,6 +2104,7 @@ export default function MapDengue() {
                   ref={mapRef}
                   center={[-43.0225, -6.7672]}
                   zoom={13.5}
+                  onViewportChange={(viewport) => setZoomAtual(viewport.zoom)}
                   mapStyle={MAP_STYLES[activeStyle]}
                   styles={{
                     light: MAP_STYLES[activeStyle] || MAP_STYLES.light,
@@ -2144,12 +2146,15 @@ export default function MapDengue() {
                         <div className="size-5 cursor-pointer rounded-full border-2 border-white bg-red-500 shadow-lg transition-transform h-6 w-6 hover:scale-110">
                           <p className="text-center text-white font-bold">U</p>
                         </div>
-                        <MarkerLabel
-                          position="bottom"
-                          className=" rounded-2xl flex bg-white/35 p-1 gap-1.5 "
-                        >
-                          {place.label}
-                        </MarkerLabel>
+
+                        {zoomAtual >= 15 && (
+                          <MarkerLabel
+                            position="bottom"
+                            className=" rounded-2xl flex bg-white/35 p-1 gap-1.5 "
+                          >
+                            {place.label}
+                          </MarkerLabel>
+                        )}
                       </MarkerContent>
                       <MarkerPopup className="w-62 p-0">
                         <div className="relative h-32 overflow-hidden rounded-t-md">
