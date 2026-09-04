@@ -83,7 +83,7 @@ const bairrosFlorianoGeoJSON = {
     {
       type: "Feature",
       properties: {
-        name: "PERIMETRO_URBANO_FLORIANO",
+        name: "PERÍMETRO URBANO DE FLORIANO",
         color: "#808080",
         fill: "rgba(197, 197, 197, 1)",
       },
@@ -2082,7 +2082,7 @@ export default function MapDengue() {
               Mapa Epidemiológico Setorial
             </h1>
             <p className="text-sm text-white font-medium mt-0.5">
-              Densidade de Casos por Bairro - Floriano, PI
+              Densidade de Casos por UBS - Floriano, PI
             </p>
           </div>
         </header>

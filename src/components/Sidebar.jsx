@@ -36,11 +36,11 @@ const Sidebar = () => {
       {/* Cabeçalho da Sidebar / Logo */}
       <div className="h-16 flex items-center px-6 border-b border-slate-100 bg-white">
         <Link to="/" className="flex items-center gap-2.5 group cursor-pointer">
-          <div className="bg-rose-50 p-1.5 rounded-lg group-hover:scale-105 transition-transform">
-            <Activity className="size-6 text-rose-600" />
+          <div className="bg-blue-50 p-1.5 rounded-lg group-hover:scale-105 transition-transform">
+            <Activity className="size-6 text-[#054060]" />
           </div>
-          <span className="text-xl font-black tracking-tight text-[#054060]">
-            Epi<span className="text-rose-600">Data</span>
+          <span className="text-xl font-black tracking-tight text-black">
+            Epi<span className="text-[#054060]">Data</span>
           </span>
         </Link>
       </div>
