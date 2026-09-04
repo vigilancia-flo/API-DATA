@@ -10,7 +10,7 @@ export default function EndemiasFilter({ selected, onChange }) {
   const endemias = [
     {
       id: "gerais",
-      name: "Endemias Gerais",
+      name: "Território de UBS",
       icon: Bug,
       color: "text-yellow-500",
       bg: "bg-yellow-100",
