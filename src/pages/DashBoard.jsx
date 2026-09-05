@@ -13,6 +13,7 @@ import {
   Bell,
   UserCircle,
   MapPin,
+  Menu,
 } from "lucide-react";
 import AssinaturaGovernamental from "../assets/AssinaturaGovernoFederal.png";
 import PatientModal from "../components/Modal/PatientModal.jsx";
@@ -28,6 +29,8 @@ export default function Dashboard() {
 
   const [pacienteSelecionado, setPacienteSelecionado] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const extrairBairro = (endereco) => {
     if (!endereco) return "Não informado";
@@ -213,21 +216,28 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-screen w-full bg-slate-50 overflow-hidden text-slate-800">
-      {/* Sidebar Fixa */}
-      <Sidebar />
+      {/* Sidebar Fixa/Responsiva */}
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
-      {/* Área de Conteúdo Principal */}
-      <div className="flex-1 flex flex-col h-full overflow-y-auto ml-64">
+      {/* AQUI ESTAVA O BUG: Forçamos w-full, zeramos a margem no mobile (ml-0) e travamos o eixo X (overflow-x-hidden) */}
+      <div className="flex-1 flex flex-col h-full w-full overflow-y-auto overflow-x-hidden ml-0 md:ml-64 transition-all duration-300">
         {/* Header Superior */}
-        <header className="px-8 py-3 flex items-center justify-between sticky top-0 z-30 bg-linear-to-r from-[#054060] to-indigo-600 shadow-md border-b border-[#043048]">
+        <header className="px-4 md:px-8 py-3 flex items-center justify-between sticky top-0 z-30 bg-linear-to-r from-[#054060] to-indigo-600 shadow-md border-b border-[#043048]">
           <div className="flex items-center gap-3">
-            <h2 className="text-xl font-bold text-white tracking-wide">
+            {/* Botão Hamburger (Aparece só no Mobile) */}
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden p-2 text-white bg-white/20 rounded-md hover:bg-white/30 transition-colors"
+            >
+              <Menu className="size-6" />
+            </button>
+
+            <h2 className="text-lg md:text-xl font-bold text-white tracking-wide">
               Visão Geral
             </h2>
           </div>
 
-          <div className="flex items-center gap-4">
-            {/* Botão de Notificação */}
+          <div className="flex items-center gap-2 md:gap-4">
             <button
               className="relative p-2 text-slate-200 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="Notificações"
@@ -236,11 +246,9 @@ export default function Dashboard() {
               <span className="absolute top-1.5 right-1.5 size-2.5 bg-rose-500 rounded-full border-2 border-[#054060]"></span>
             </button>
 
-            {/* Divisor */}
             <div className="h-6 w-px bg-white/20"></div>
 
-            {/* Perfil do Usuário */}
-            <button className="flex items-center gap-3 p-1.5 pr-4 rounded-full hover:bg-white/10 transition-all duration-200 text-left focus:outline-none focus:ring-2 focus:ring-white/50">
+            <button className="flex items-center gap-3 p-1.5 md:pr-4 rounded-full hover:bg-white/10 transition-all duration-200 text-left focus:outline-none focus:ring-2 focus:ring-white/50">
               <div className="bg-white/20 p-1.5 rounded-full">
                 <UserCircle className="size-5 text-white" />
               </div>
@@ -256,23 +264,24 @@ export default function Dashboard() {
           </div>
         </header>
 
-        <main className="p-6 md:p-8 space-y-8 max-w-7xl mx-auto w-full">
+        {/* Adicionamos overflow-x-hidden no main também para blindar os gráficos */}
+        <main className="p-4 md:p-8 space-y-6 md:space-y-8 w-full max-w-7xl mx-auto overflow-x-hidden">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">
+              <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900">
                 Dashboard - Dengue
               </h1>
-              <p className="text-slate-500 mt-1">
+              <p className="text-sm md:text-base text-slate-500 mt-1">
                 Acompanhamento epidemiológico dos casos de Dengue
               </p>
             </div>
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-slate-400">
+            <div className="flex items-center justify-between sm:justify-start gap-3">
+              <span className="text-xs md:text-sm text-slate-400 hidden sm:block">
                 Última atualização: Agora
               </span>
               <button
                 onClick={() => window.location.reload()}
-                className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg shadow-sm text-sm font-medium hover:bg-slate-50 transition-all active:scale-95"
+                className="flex items-center justify-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-lg shadow-sm text-sm font-medium hover:bg-slate-50 transition-all active:scale-95 w-full sm:w-auto"
               >
                 <RefreshCw className="size-4 text-slate-500" />
                 Atualizar
@@ -281,20 +290,20 @@ export default function Dashboard() {
           </div>
 
           {/* Grid de KPIs */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {kpis.map((kpi, idx) => {
               const colors = getColorClasses(kpi.color);
               return (
                 <div
                   key={idx}
-                  className={`bg-white rounded-xl shadow-sm border border-slate-100 p-6 border-l-4 ${colors.split(" ")[0]} flex flex-col justify-between`}
+                  className={`bg-white rounded-xl shadow-sm border border-slate-100 p-5 md:p-6 border-l-4 ${colors.split(" ")[0]} flex flex-col justify-between`}
                 >
                   <div className="flex justify-between items-start">
                     <div>
                       <p className="text-sm font-medium text-slate-500 mb-1">
                         {kpi.title}
                       </p>
-                      <h3 className="text-3xl font-bold text-slate-800">
+                      <h3 className="text-2xl md:text-3xl font-bold text-slate-800">
                         {kpi.value}
                       </h3>
                     </div>
@@ -311,20 +320,20 @@ export default function Dashboard() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 overflow-hidden w-full">
               <CurvaEpidemica pacientes={pacientes} />
             </div>
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 overflow-hidden w-full">
               <StatusDonut pacientes={pacientes} />
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 overflow-hidden w-full">
               <PerfilDemografico pacientes={pacientes} />
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col">
+            <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-5 md:p-6 flex flex-col w-full overflow-hidden">
               <div className="mb-6">
                 <h3 className="text-lg font-bold text-slate-800">
                   Distribuição por Quadrante
@@ -339,11 +348,11 @@ export default function Dashboard() {
                     <div className="flex justify-between text-sm mb-1.5">
                       <span className="font-medium text-slate-600 flex items-center gap-2">
                         <span
-                          className={`size-2.5 rounded-full ${item.color}`}
+                          className={`size-2.5 rounded-full flex-shrink-0 ${item.color}`}
                         ></span>
-                        {item.name}
+                        <span className="truncate">{item.name}</span>
                       </span>
-                      <span className="font-bold text-slate-700">
+                      <span className="font-bold text-slate-700 ml-2">
                         {item.value}
                       </span>
                     </div>
@@ -358,8 +367,8 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Coluna 3: Casos Recentes (Seu componente original) */}
-            <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col">
+            {/* Coluna 3: Casos Recentes */}
+            <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-5 md:p-6 flex flex-col w-full overflow-hidden">
               <div className="mb-6">
                 <h3 className="text-lg font-bold text-slate-800">
                   Casos Recentes
@@ -378,9 +387,11 @@ export default function Dashboard() {
                       setModalAberto(true);
                     }}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="size-2 rounded-full bg-rose-500 shadow-sm shadow-rose-200"></div>
-                      <div className="truncate w-40">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                      <div
+                        className={`size-2 rounded-full flex-shrink-0 ${caso.corClassificacao} shadow-sm`}
+                      ></div>
+                      <div className="flex-1 min-w-0">
                         <p className="text-sm font-bold text-slate-800 truncate">
                           {caso.name}
                         </p>
@@ -389,19 +400,20 @@ export default function Dashboard() {
                         </p>
                       </div>
                     </div>
-                    <ArrowRight className="size-4 text-slate-300 group-hover:text-slate-600 transition-colors" />
+                    <ArrowRight className="size-4 text-slate-300 group-hover:text-slate-600 transition-colors flex-shrink-0 ml-2" />
                   </div>
                 ))}
               </div>
             </div>
           </div>
         </main>
-        <footer className="mt-auto px-8 py-5 border-t border-slate-200 bg-white flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center">
+
+        <footer className="mt-auto px-4 md:px-8 py-5 border-t border-slate-200 bg-white flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start">
             <img
               src={AssinaturaGovernamental}
               alt="Assinatura do Governo Federal e Secretaria de Saúde"
-              className="h-10 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-default rounded-xs"
+              className="h-8 md:h-10 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-default rounded-xs"
             />
           </div>
 
@@ -411,6 +423,7 @@ export default function Dashboard() {
           </div>
         </footer>
       </div>
+
       <PatientModal
         isOpen={modalAberto}
         paciente={pacienteSelecionado}

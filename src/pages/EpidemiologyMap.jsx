@@ -21,6 +21,7 @@ import {
   Navigation,
   Clock,
   ExternalLink,
+  Menu,
 } from "lucide-react";
 import "maplibre-gl/dist/maplibre-gl.css";
 
@@ -1897,6 +1898,8 @@ function EpidemiologicMap() {
   const [geoData, setGeoData] = useState(bairrosFlorianoGeoJSON);
   const [loading, setLoading] = useState(true);
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   const [hoverInfo, setHoverInfo] = useState(null);
 
   const [todosPacientes, setTodosPacientes] = useState([]);
@@ -2073,22 +2076,32 @@ function EpidemiologicMap() {
 
   return (
     <div className="flex h-screen w-full bg-slate-50 overflow-hidden">
-      <Sidebar />
-      <div className="flex-1 flex flex-col h-full relative ml-64">
-        <header className="px-8 py-5 border-b bg-linear-to-r from-[#054060] to-indigo-600 backdrop-blur-md z-10 flex items-center justify-betweend">
-          <div>
-            <h1 className="text-2xl font-extrabold text-white flex items-center gap-2">
-              <MapIcon className="text-white-600 size-6" />
-              Mapa Epidemiológico Setorial
-            </h1>
-            <p className="text-sm text-white font-medium mt-0.5">
-              Densidade de Casos por UBS - Floriano, PI
-            </p>
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      <div className="flex-1 flex flex-col h-full relative ml-0 md:ml-64 w-full">
+        <header className="px-4 md:px-8 py-3 md:py-5 border-b bg-linear-to-r from-[#054060] to-indigo-600 backdrop-blur-md z-10 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden p-2 text-white bg-white/20 rounded-md hover:bg-white/30 transition-colors"
+            >
+              <Menu className="size-6" />
+            </button>
+
+            <div>
+              <h1 className="text-lg md:text-2xl font-extrabold text-white flex items-center gap-2">
+                <MapIcon className="text-white-600 size-5 md:size-6" />
+                Mapa Epidemiológico Setorial
+              </h1>
+              <p className="text-xs md:text-sm text-white font-medium mt-0.5">
+                Densidade de Casos por UBS - Floriano, PI
+              </p>
+            </div>
           </div>
         </header>
 
-        <main className="flex-1 p-4 md:p-6 relative">
-          <div className="relative w-full h-full rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-200">
+        {/* 4. ÁREA DO MAPA RESPONSIVA */}
+        <main className="flex-1 p-2 md:p-6 relative flex flex-col">
+          <div className="relative w-full h-full rounded-xl md:rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-200 flex-1">
             <EndemiasFilter
               selected={endemiaSelecionada}
               onChange={setEndemiaSelecionada}
@@ -2213,7 +2226,14 @@ function EpidemiologicMap() {
                     <h4 className="font-bold text-slate-800 text-sm">
                       {hoverInfo.nome}
                     </h4>
-                    <div className="flex items-center gap-2 mt-1"></div>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-slate-600 text-xs font-medium">
+                        Casos registrados:
+                      </span>
+                      <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-bold">
+                        {hoverInfo.casos}
+                      </span>
+                    </div>
                   </div>
                 )}
               </div>
