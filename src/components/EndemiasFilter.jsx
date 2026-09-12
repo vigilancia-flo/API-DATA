@@ -30,7 +30,7 @@ export default function EndemiasFilter({ selected, onChange, className }) {
       icon: Activity,
       color: "text-purple-500",
       bg: "bg-purple-100",
-      rota: "/mapa-epidemiologico", // Substitua pela rota real quando criar
+      rota: "/mapa-epidemiologico/endemias/sifi",
     },
     {
       id: "tuberculose",
@@ -38,12 +38,11 @@ export default function EndemiasFilter({ selected, onChange, className }) {
       icon: ShieldAlert,
       color: "text-emerald-500",
       bg: "bg-emerald-100",
-      rota: "/mapa-epidemiologico/endemias/tuberculose", // Substitua pela rota real quando criar
+      rota: "/mapa-epidemiologico/endemias/tuberculose",
     },
   ];
 
   const handleSelection = (item) => {
-    // 2. Atualiza o estado na página pai (usando try/catch para evitar travar se a página pai tiver algum erro)
     if (onChange) {
       try {
         onChange(item.id);
@@ -68,7 +67,7 @@ export default function EndemiasFilter({ selected, onChange, className }) {
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-3 bg-white/90 backdrop-blur-md px-4 py-3 rounded-xl shadow-lg border border-slate-200/60 w-37.5 h-11.6 -ml-5 -mt-3 md:mt-0 md:w-full md:ml-0 hover:bg-white transition-all active:scale-95 "
+        className="flex items-center gap-3 bg-white/90 backdrop-blur-md px-4 py-3 rounded-xl shadow-lg border border-slate-200/60 w-37.5 h-11.6 -ml-5 -mt-3 md:mt-0 md:w-full md:ml-0 hover:bg-white transition-all active:scale-95 hover:cursor-pointer"
       >
         <div
           className={`p-1.5 rounded-md ${selectedItem.bg} ${selectedItem.color}`}
@@ -99,7 +98,7 @@ export default function EndemiasFilter({ selected, onChange, className }) {
                 className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                   selected === item.id
                     ? "bg-slate-100 ring-1 ring-slate-300 shadow-sm"
-                    : "hover:bg-slate-50 opacity-70 hover:opacity-100"
+                    : "hover:bg-slate-50 opacity-70 hover:opacity-100 hover:cursor-pointer"
                 }`}
               >
                 <div className={`p-1.5 rounded-md ${item.bg} ${item.color}`}>

@@ -76,24 +76,24 @@ const Sidebar = ({ isOpen, onClose }) => {
 
             <div className="space-y-1.5">
               {/* Adicionamos onClick={onClose} nos links para fechar a sidebar ao clicar em um menu no celular */}
-              <Link
-                to="/"
-                onClick={onClose}
-                className={`${baseClasses} ${isActive("/") ? activeClasses : inactiveClasses}`}
-              >
-                <Home
-                  className={`size-5 ${isActive("/") ? "text-white" : "text-slate-400 group-hover:text-[#054060]"}`}
-                />
-                Home
-              </Link>
+              {/* <Link
+                  to="/"
+                  onClick={onClose}
+                  className={`${baseClasses} ${isActive("/") ? activeClasses : inactiveClasses}`}
+                >
+                  <Home
+                    className={`size-5 ${isActive("/") ? "text-white" : "text-slate-400 group-hover:text-[#054060]"}`}
+                  />
+                  Home
+                </Link> */}
 
               <Link
-                to="/dados-gerais"
+                to="/dashboard"
                 onClick={onClose}
-                className={`${baseClasses} ${isActive("/dados-gerais") ? activeClasses : inactiveClasses}`}
+                className={`${baseClasses} ${isActive("/dashboard") ? activeClasses : inactiveClasses}`}
               >
                 <LayoutDashboard
-                  className={`size-5 ${isActive("/dados-gerais") ? "text-white" : "text-slate-400 group-hover:text-[#054060]"}`}
+                  className={`size-5 ${isActive("/dashboard") ? "text-white" : "text-slate-400 group-hover:text-[#054060]"}`}
                 />
                 Dashboard
               </Link>
@@ -109,7 +109,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 Mapa Epidemiológico
               </Link>
 
-              <Link
+              {/* <Link
                 to="/suporte"
                 onClick={onClose}
                 className={`${baseClasses} ${isActive("/suporte") ? activeClasses : inactiveClasses}`}
@@ -118,7 +118,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                   className={`size-5 ${isActive("/suporte") ? "text-white" : "text-slate-400 group-hover:text-[#054060]"}`}
                 />
                 Dúvidas Frequentes
-              </Link>
+              </Link> */}
             </div>
           </div>
         </nav>

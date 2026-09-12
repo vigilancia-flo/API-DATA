@@ -1,0 +1,322 @@
+import React, { useMemo } from "react";
+import {
+  Users,
+  Activity,
+  MapPin,
+  CalendarHeart,
+  AlertCircle,
+} from "lucide-react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
+
+const COLORS = ["#8b5cf6", "#d946ef", "#f43f5e", "#0ea5e9"];
+
+// Função para mascarar o nome do paciente (Proteção LGPD)
+const anonimizarNome = (nome) => {
+  if (!nome) return "Paciente N/I";
+  const partes = nome.trim().split(/\s+/);
+  // Se for só um nome, pega as 2 primeiras letras e põe asteriscos
+  if (partes.length === 1) return `${partes[0].substring(0, 2)}***`;
+  // Se for nome composto, transforma em iniciais (Ex: "RN REGIA" -> "R. R.")
+  return partes.map((p) => `${p[0].toUpperCase()}.`).join(" ");
+};
+
+export default function DashboardSifilis({ pacientes }) {
+  // 1. Processamento de KPIs
+  const totalCasos = pacientes.length;
+
+  const casosCongenita = pacientes.filter((p) =>
+    p.id_agravo?.toUpperCase().includes("A50"),
+  ).length;
+
+  const bairrosAfetados = new Set(pacientes.map((p) => p.nm_ubs)).size;
+
+  // 2. Processamento para Gráfico de Rosca (Tipos de Sífilis por CID)
+  const dadosTiposSifilis = useMemo(() => {
+    const contagem = {
+      "Congênita (A50)": 0,
+      "Precoce (A51)": 0,
+      "Tardia (A52)": 0,
+      "Não Especificada (A53)": 0,
+    };
+
+    pacientes.forEach((p) => {
+      const cid = p.id_agravo?.toUpperCase() || "";
+      if (cid.includes("A50")) contagem["Congênita (A50)"]++;
+      else if (cid.includes("A51")) contagem["Precoce (A51)"]++;
+      else if (cid.includes("A52")) contagem["Tardia (A52)"]++;
+      else contagem["Não Especificada (A53)"]++;
+    });
+
+    return Object.entries(contagem)
+      .filter(([_, valor]) => valor > 0)
+      .map(([nome, valor]) => ({ name: nome, value: valor }));
+  }, [pacientes]);
+
+  // 3. Processamento para Curva Epidêmica (Por Mês)
+  const dadosEvolucao = useMemo(() => {
+    const contagemMes = {};
+    pacientes.forEach((p) => {
+      if (!p.dt_notific) return;
+      const data = new Date(p.dt_notific);
+      if (!isNaN(data)) {
+        const mesAno = `${data.toLocaleString("pt-BR", { month: "short" })}/${data.getFullYear()}`;
+        contagemMes[mesAno] = (contagemMes[mesAno] || 0) + 1;
+      }
+    });
+
+    return Object.entries(contagemMes).map(([data, casos]) => ({
+      data,
+      casos,
+    }));
+  }, [pacientes]);
+
+  // 4. Casos Recentes (Tabela)
+  const casosRecentes = [...pacientes]
+    .sort((a, b) => new Date(b.dt_notific) - new Date(a.dt_notific))
+    .slice(0, 6);
+
+  return (
+    <div className="space-y-4 sm:space-y-6 animate-in fade-in duration-500">
+      {/* Linha 1: KPIs */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <KpiCard
+          title="Total de Notificações"
+          value={totalCasos}
+          icon={Users}
+          color="bg-purple-500"
+          bgLight="bg-purple-50"
+        />
+        <KpiCard
+          title="Casos Congênitos (A50)"
+          value={casosCongenita}
+          icon={CalendarHeart}
+          color="bg-pink-500"
+          bgLight="bg-pink-50"
+          subtitle="Atenção redobrada"
+        />
+        <KpiCard
+          title="Unidades Envolvidas"
+          value={bairrosAfetados}
+          icon={MapPin}
+          color="bg-indigo-500"
+          bgLight="bg-indigo-50"
+        />
+        <KpiCard
+          title="Taxa de Registro"
+          value={`${totalCasos > 0 ? 100 : 0}%`}
+          icon={Activity}
+          color="bg-emerald-500"
+          bgLight="bg-emerald-50"
+          subtitle="Base atualizada"
+        />
+      </div>
+
+      {/* Linha 2: Gráficos Principais */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        {/* Gráfico de Linha - Evolução */}
+        <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6">
+          <h3 className="text-base sm:text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+            <Activity className="size-5 text-purple-600" /> Curva de
+            Notificações
+          </h3>
+          <div className="h-60 sm:h-72 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={dadosEvolucao}>
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  stroke="#f1f5f9"
+                />
+                <XAxis
+                  dataKey="data"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: "#64748b", fontSize: 12 }}
+                  minTickGap={20}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: "#64748b", fontSize: 12 }}
+                  width={30}
+                />
+                <Tooltip
+                  contentStyle={{
+                    borderRadius: "12px",
+                    border: "none",
+                    boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="casos"
+                  stroke="#8b5cf6"
+                  strokeWidth={3}
+                  dot={{
+                    r: 4,
+                    fill: "#8b5cf6",
+                    strokeWidth: 2,
+                    stroke: "#fff",
+                  }}
+                  activeDot={{ r: 6 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Gráfico de Rosca - Tipos Clínicos */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6 flex flex-col">
+          <h3 className="text-base sm:text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+            <AlertCircle className="size-5 text-purple-600" /> Classificação
+            Clínica
+          </h3>
+          <div className="flex-1 min-h-[200px] sm:min-h-[250px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={dadosTiposSifilis}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={50}
+                  outerRadius={80}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {dadosTiposSifilis.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    borderRadius: "12px",
+                    border: "none",
+                    boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="flex flex-wrap gap-x-3 gap-y-2 justify-center mt-2">
+            {dadosTiposSifilis.map((entry, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-1.5 text-[11px] sm:text-xs font-medium text-slate-600"
+              >
+                <span
+                  className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0"
+                  style={{ backgroundColor: COLORS[idx % COLORS.length] }}
+                ></span>
+                {entry.name}: {entry.value}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Linha 3: Lista de Casos Recentes (Anonimizada) */}
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6 w-full overflow-hidden">
+        <h3 className="text-base sm:text-lg font-bold text-slate-800 mb-4">
+          Últimos Pacientes Registrados
+        </h3>
+        <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+          <table className="w-full text-left text-sm text-slate-600 min-w-[600px]">
+            <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-100">
+              <tr>
+                <th className="px-4 py-3 font-semibold whitespace-nowrap">
+                  Data Notificação
+                </th>
+                <th className="px-4 py-3 font-semibold whitespace-nowrap">
+                  Unidade (UBS)
+                </th>
+                <th className="px-4 py-3 font-semibold whitespace-nowrap">
+                  CID (Agravo)
+                </th>
+                <th className="px-4 py-3 font-semibold rounded-tr-lg whitespace-nowrap">
+                  Nº Notificação
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {casosRecentes.map((caso, idx) => (
+                <tr
+                  key={idx}
+                  className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors"
+                >
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    {caso.dt_notific || "-"}
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    <span className="bg-slate-100 text-slate-700 px-2 py-1 rounded-md text-xs font-medium border border-slate-200 inline-block">
+                      {caso.nm_ubs || "Não informada"}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    <span
+                      className={`px-2 py-1 rounded-md text-xs font-bold inline-block ${caso.id_agravo?.includes("A50") ? "bg-rose-100 text-rose-700" : "bg-purple-100 text-purple-700"}`}
+                    >
+                      {caso.id_agravo || "-"}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-slate-400 whitespace-nowrap">
+                    #{caso.nu_notific}
+                  </td>
+                </tr>
+              ))}
+              {casosRecentes.length === 0 && (
+                <tr>
+                  <td
+                    colSpan="5"
+                    className="px-4 py-8 text-center text-slate-400"
+                  >
+                    Nenhum registro encontrado.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Subcomponente de KPI para manter o código limpo
+function KpiCard({ title, value, icon: Icon, color, bgLight, subtitle }) {
+  return (
+    <div className="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3 sm:gap-4 transition-transform hover:-translate-y-1 duration-300">
+      <div
+        className={`shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center ${bgLight}`}
+      >
+        <Icon className={`size-6 sm:size-7 ${color.replace("bg-", "text-")}`} />
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="text-xs sm:text-sm font-semibold text-slate-500 truncate">
+          {title}
+        </p>
+        <h4 className="text-xl sm:text-2xl font-black text-slate-800">
+          {value}
+        </h4>
+        {subtitle && (
+          <p className="text-[10px] sm:text-xs font-medium text-slate-400 mt-0.5 truncate">
+            {subtitle}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}

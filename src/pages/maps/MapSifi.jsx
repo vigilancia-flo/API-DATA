@@ -1920,22 +1920,20 @@ const marcadores = [
   },
 ];
 
-export default function MapDengue() {
+export default function MapSifi() {
   const mapRef = useRef(null);
   const [activeStyle, setActiveStyle] = useState("light");
   const [geoData, setGeoData] = useState(bairrosFlorianoGeoJSON);
   const [loading, setLoading] = useState(true);
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   const [hoverInfo, setHoverInfo] = useState(null);
-
   const [todosPacientes, setTodosPacientes] = useState([]);
-  const [endemiaSelecionada, setEndemiaSelecionada] = useState("dengue");
 
+  // Aqui já deixamos travado na tuberculose
+  const [endemiaSelecionada, setEndemiaSelecionada] = useState("sifilis");
   const [zoomAtual, setZoomAtual] = useState(13.5);
-
   const is3D = activeStyle === "openstreetmap3d";
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -1948,13 +1946,15 @@ export default function MapDengue() {
     setActiveStyle((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
+  // Busca os dados exclusivamente da rota de tuberculose
   useEffect(() => {
     setLoading(true);
     const apiUrl = import.meta.env.VITE_API_URL;
 
-    fetch(`${apiUrl}/api/dengue/`)
+    fetch(`${apiUrl}/api/sifilis/`)
       .then((res) => {
-        if (!res.ok) throw new Error("Erro na requisição da API do Mapa");
+        if (!res.ok)
+          throw new Error("Erro na requisição da API do Mapa de Tuberculose");
         return res.json();
       })
       .then((data) => {
@@ -1967,116 +1967,78 @@ export default function MapDengue() {
       });
   }, []);
 
-  // Função que lida com o endereço unificado do backend (ignorando o CEP)
-  const extrairBairro = (endereco) => {
-    if (!endereco) return "";
-    const partes = endereco.split(",");
-    if (partes.length === 1) return "";
-
-    let bairroStr = partes[partes.length - 1].trim();
-    // Se a última parte for número (CEP), pega a penúltima (Bairro)
-    if (/^[0-9-]+$/.test(bairroStr) && partes.length > 2) {
-      bairroStr = partes[partes.length - 2].trim();
-    }
-
-    return bairroStr
-      .toUpperCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, ""); // Retorna sem acentos e maiúsculo
-  };
-
+  // Lógica principal: mapear nome da UBS para o nome da Área no GeoJSON e somar nu_notific
   useEffect(() => {
     if (todosPacientes.length === 0) return;
 
-    const pacientesFiltrados = todosPacientes.filter((p) => {
-      const agravo = p.id_agravo ? p.id_agravo.toUpperCase() : "";
-
-      if (endemiaSelecionada === "dengue")
-        return agravo.includes("A90") || agravo === "";
-      if (endemiaSelecionada === "sifilis")
-        return (
-          agravo.includes("A51") ||
-          agravo.includes("A52") ||
-          agravo.includes("A53")
-        );
-      if (endemiaSelecionada === "tuberculose")
-        return agravo.includes("A15") || agravo.includes("A16");
-      if (endemiaSelecionada === "gerais") return true;
-
-      return true;
-    });
-
-    // 1. DICIONÁRIO BAIRRO -> ÁREA UBS
-    const bairroParaAreaUbs = {
-      CENTRO: "AREA UBS FLORIANO",
-      SAMBAIBA: "AREA UBS DIRCEU ARCOVERDE",
-      "SAMBAIBA VELHA": "AREA UBS DIRCEU ARCOVERDE",
-      MANGUINHA: "AREA UBS JOSE PARAGUASSU",
-      "ALTO DA CRUZ": "AREA UBS THEODORO FERREIRA SOBRAL",
-      "CAMPO VELHO": "AREA DA UBS PEDRO SIMPLICIO",
-      "REDE NOVA": "AREA UBS ALFREDO DE CARVALHO",
-      TABOCA: "AREA DA UBS LUIZ TAVARES",
-      "IRAPUA I": "AREA UBS CAMILO FILHO",
-      "IRAPUA II": "AREA UBS CAMILO FILHO",
-      "NOSSA SENHORA DA GUIA": "AREA UBS NOSSA SENHORA DA GUIA",
-      TIBERAO: "AREA UBS RAIMUNDO FILHO",
-
-      // --- BAIRROS NOVOS ADICIONADOS DO CONSOLE ---
-      "BOM LUGAR": "AREA UBS PAULO KALUME",
-      "BOSQUE SANTA TEREZINHA": "AREA UBS JOAO ELIAS OKA",
-      "CAIXA D AGUA": "AREA UBS THEODORO FERREIRA SOBRAL",
-      CAJUEIRO: "AREA UBS JOAO ELIAS OKA",
-      "ALTO DA GUIA": "AREA UBS NOSSA SENHORA DA GUIA",
-      CURADOR: "AREA UBS THEODORO FERREIRA SOBRAL",
-      IBIAPABA: "AREA UBS VIANA DE CARVALHO",
-      "PAU FERRADO": "AREA UBS PAULO MARTINS",
-      "SAO BORJA": "AREA DA UBS PEDRO SIMPLICIO", // CORREÇÃO: Faltava o "DA"
-      "PLANALTO SAMBAIBA": "AREA UBS DIRCEU ARCOVERDE",
-      CATUMBI: "AREA UBS RAIMUNDO FILHO",
-      "SAO CRISTOVAO": "AREA UBS FLORIANO",
-      TAMBORIL: "AREA UBS ALFREDO DE CARVALHO",
-      "CONJUNTO  PARAISO": "AREA DA UBS JASMINA BUCAR", // CORREÇÃO: Removido os acentos
-      CANCELA: "AREA UBS PAULO KALUME", // CORREÇÃO: Removido o "DA"
-      CANOAS: "AREA UBS JOSE PARAGUASSU", // CORREÇÃO: Removido os acentos
-      "PLANALTO BELA VISTA": "AREA DA UBS PEDRO SIMPLICIO", // CORREÇÃO: Removido os acentos
-
-      // --- ERROS DE DIGITAÇÃO / SINAN ---
-      MELADAO: "AREA DA UBS PEDRO SIMPLICIO",
-      VIAZUL: "AREA UBS RAIMUNDO FILHO",
-      "PEDRO SIMPLICIO": "AREA DA UBS PEDRO SIMPLICIO",
-
-      // --- CEPS SOLTOS ---
-      64800280: "AREA UBS HELVIDIO DE HOLANDA BARROS", // CORREÇÃO: Removido os acentos
-      64800850: "AREA UBS DIRCEU ARCOVERDE",
-      64800000: "AREA UBS FLORIANO",
-    };
-
     const contagemPorArea = {};
 
-    // 2. CONTAGEM
-    pacientesFiltrados.forEach((paciente) => {
-      if (paciente.endereco) {
-        const bairroNormalizado = extrairBairro(paciente.endereco);
+    todosPacientes.forEach((paciente) => {
+      // Pega o nome da UBS ou código, remove acentos e deixa maiúsculo
+      const nomeUbsOriginal = String(
+        paciente.un_saude || paciente.id_unidade || "",
+      );
+      const nomeUbs = nomeUbsOriginal
+        .toUpperCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
 
-        // Pega o nome da UBS correspondente ao bairro do paciente
-        const nomeAreaMapa = bairroParaAreaUbs[bairroNormalizado];
+      let nomeAreaMapa = null;
 
-        if (nomeAreaMapa) {
-          contagemPorArea[nomeAreaMapa] =
-            (contagemPorArea[nomeAreaMapa] || 0) + 1;
-        } else {
-          // Descomente a linha abaixo para ver no console (F12) quais bairros faltam no dicionário
-          // console.warn("Bairro sem UBS mapeada no dicionário:", bairroNormalizado);
-        }
+      // Dicionário de aproximação (heurística) para ligar a UBS à área do mapa
+      if (nomeUbs.includes("DIRCEU") || nomeUbs.includes("ARCOVERDE"))
+        nomeAreaMapa = "AREA UBS DIRCEU ARCOVERDE";
+      else if (nomeUbs.includes("PARAGUASSU"))
+        nomeAreaMapa = "AREA UBS JOSE PARAGUASSU";
+      else if (nomeUbs.includes("THEODORO") || nomeUbs.includes("SOBRAL"))
+        nomeAreaMapa = "AREA UBS THEODORO FERREIRA SOBRAL";
+      else if (nomeUbs.includes("PEDRO SIMPLICIO"))
+        nomeAreaMapa = "AREA DA UBS PEDRO SIMPLICIO";
+      else if (nomeUbs.includes("ALFREDO"))
+        nomeAreaMapa = "AREA UBS ALFREDO DE CARVALHO";
+      else if (nomeUbs.includes("LUIZ TAVARES") || nomeUbs.includes("TABOCA"))
+        nomeAreaMapa = "AREA DA UBS LUIZ TAVARES";
+      else if (nomeUbs.includes("CAMILO"))
+        nomeAreaMapa = "AREA UBS CAMILO FILHO";
+      else if (nomeUbs.includes("GUIA"))
+        nomeAreaMapa = "AREA UBS NOSSA SENHORA DA GUIA";
+      else if (nomeUbs.includes("RAIMUNDO FILHO"))
+        nomeAreaMapa = "AREA UBS RAIMUNDO FILHO";
+      else if (nomeUbs.includes("KALUME"))
+        nomeAreaMapa = "AREA UBS PAULO KALUME";
+      else if (nomeUbs.includes("OKA") || nomeUbs.includes("ELIAS"))
+        nomeAreaMapa = "AREA UBS JOAO ELIAS OKA";
+      else if (nomeUbs.includes("VIANA"))
+        nomeAreaMapa = "AREA UBS VIANA DE CARVALHO";
+      else if (nomeUbs.includes("PAULO MARTINS"))
+        nomeAreaMapa = "AREA UBS PAULO MARTINS";
+      else if (nomeUbs.includes("HELVIDIO") || nomeUbs.includes("HOLANDA"))
+        nomeAreaMapa = "AREA UBS HELVIDIO DE HOLANDA BARROS";
+      else if (nomeUbs.includes("JASMINA") || nomeUbs.includes("BUCAR"))
+        nomeAreaMapa = "AREA DA UBS JASMINA BUCAR";
+      else if (nomeUbs.includes("PAM") || nomeUbs.includes("P.A.M"))
+        nomeAreaMapa = "AREA UBS PAM";
+      else if (nomeUbs.includes("SANTA CRUZ"))
+        nomeAreaMapa = "AREA UBS SANTA CRUZ";
+      else if (nomeUbs.includes("FLORIANO") || nomeUbs.includes("CENTRO"))
+        nomeAreaMapa = "AREA UBS FLORIANO";
+
+      if (nomeAreaMapa) {
+        contagemPorArea[nomeAreaMapa] =
+          (contagemPorArea[nomeAreaMapa] || 0) + 1;
+      } else {
+        console.warn(
+          "UBS da Tuberculose não mapeada para o polígono:",
+          nomeUbsOriginal,
+        );
       }
     });
 
-    // 3. INJEÇÃO DOS DADOS NO MAPA
+    // Injeta os dados consolidados de volta nas features do mapa
     const updatedFeatures = bairrosFlorianoGeoJSON.features.map((feature) => {
       const corOriginal =
         feature.properties.fill || feature.properties.color || "#808080";
       const nomeOriginal = feature.properties.name || "";
-
       let numeroCasos = 0;
 
       if (nomeOriginal) {
@@ -2084,8 +2046,6 @@ export default function MapDengue() {
           .toUpperCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "");
-
-        // Puxa do objeto que acabamos de montar a contagem agrupada
         numeroCasos = contagemPorArea[nomeAreaGeoJSON] || 0;
       }
 
@@ -2100,7 +2060,7 @@ export default function MapDengue() {
     });
 
     setGeoData({ ...bairrosFlorianoGeoJSON, features: updatedFeatures });
-  }, [endemiaSelecionada, todosPacientes, activeStyle]);
+  }, [todosPacientes, activeStyle]);
 
   return (
     <div className="flex h-screen w-full bg-slate-50 overflow-hidden">
@@ -2126,7 +2086,6 @@ export default function MapDengue() {
           </div>
         </header>
 
-        {/* 4. ÁREA DO MAPA RESPONSIVA */}
         <main className="flex-1 p-2 md:p-6 relative flex flex-col">
           <div className="relative w-full h-full rounded-xl md:rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-slate-200 flex-1">
             <EndemiasFilter
@@ -2136,7 +2095,7 @@ export default function MapDengue() {
 
             {loading ? (
               <div className="flex h-full items-center justify-center">
-                <Activity className="size-8 text-red-500 animate-spin" />
+                <Activity className="size-8 text-purple-500 animate-spin" />
               </div>
             ) : (
               <div className="relative w-full h-full">
@@ -2176,6 +2135,7 @@ export default function MapDengue() {
                       }
                     }}
                   />
+
                   {marcadores.map((place) => (
                     <MapMarker
                       key={place.id}
@@ -2183,10 +2143,9 @@ export default function MapDengue() {
                       latitude={place.lat}
                     >
                       <MarkerContent>
-                        <div className="size-5 cursor-pointer rounded-full border-2 border-white bg-red-500 shadow-lg transition-transform h-6 w-6 hover:scale-110">
+                        <div className="size-5 cursor-pointer rounded-full border-2 border-white bg-purple-500 shadow-lg transition-transform h-6 w-6 hover:scale-110">
                           <p className="text-center text-white font-bold">U</p>
                         </div>
-
                         {zoomAtual >= 15 && (
                           <MarkerLabel
                             position="bottom"
@@ -2246,6 +2205,7 @@ export default function MapDengue() {
                     </MapMarker>
                   ))}
                 </Map>
+
                 {hoverInfo && (
                   <div
                     className="absolute z-50 bg-white/95 backdrop-blur-sm p-3 rounded-lg shadow-xl border border-slate-200 pointer-events-none transition-opacity duration-150"
@@ -2261,7 +2221,7 @@ export default function MapDengue() {
                       <span className="text-slate-600 text-xs font-medium">
                         Casos registrados:
                       </span>
-                      <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-bold">
+                      <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-bold">
                         {hoverInfo.casos}
                       </span>
                     </div>
@@ -2269,7 +2229,6 @@ export default function MapDengue() {
                 )}
               </div>
             )}
-
             <ButtonTheme
               activeStyle={activeStyle}
               setActiveStyle={setActiveStyle}

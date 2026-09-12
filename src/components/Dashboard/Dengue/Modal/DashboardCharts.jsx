@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -17,6 +17,16 @@ import {
 
 // 1. CURVA EPIDÊMICA (Gráfico de Linha)
 export function CurvaEpidemica({ pacientes }) {
+  // Hook para detectar se é tela mobile
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize(); // Executa na primeira renderização
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const data = useMemo(() => {
     if (!pacientes || pacientes.length === 0) return [];
 
@@ -35,19 +45,41 @@ export function CurvaEpidemica({ pacientes }) {
       .sort((a, b) => new Date(a.data) - new Date(b.data));
   }, [pacientes]);
 
+  // Função para encurtar a data no mobile e não quebrar o layout
+  const formatXAxis = (tickItem) => {
+    if (!tickItem) return "";
+    const partes = tickItem.split("-");
+    if (partes.length === 3) {
+      // Retorna DD/MM no mobile e DD/MM/AA no desktop
+      return isMobile
+        ? `${partes[2]}/${partes[1]}`
+        : `${partes[2]}/${partes[1]}/${partes[0].slice(-2)}`;
+    }
+    return tickItem;
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col h-full">
-      <div className="mb-6">
+    // Adicionado overflow-hidden e ajuste de padding no mobile
+    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-4 md:p-6 flex flex-col h-full overflow-hidden w-full">
+      <div className="mb-4 md:mb-6">
         <h3 className="text-lg font-bold text-slate-800">Curva Epidêmica</h3>
         <p className="text-sm text-slate-500">
           Evolução de casos ao longo do tempo
         </p>
       </div>
-      <div className="flex-1 min-h-62.5">
+
+      {/* Ajuste para garantir a renderização do ResponsiveContainer */}
+      <div className="flex-1 w-full min-h-[250px] md:min-h-62.5">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={data}
-            margin={{ top: 5, right: 20, left: -20, bottom: 5 }}
+            // Margens dinâmicas: reduzimos as margens laterais no mobile
+            margin={{
+              top: 5,
+              right: isMobile ? 10 : 20,
+              left: isMobile ? -30 : -20,
+              bottom: 5,
+            }}
           >
             <CartesianGrid
               strokeDasharray="3 3"
@@ -56,12 +88,15 @@ export function CurvaEpidemica({ pacientes }) {
             />
             <XAxis
               dataKey="data"
-              tick={{ fontSize: 12, fill: "#64748b" }}
-              tickMargin={10}
+              tickFormatter={formatXAxis}
+              tick={{ fontSize: isMobile ? 10 : 12, fill: "#64748b" }}
+              tickMargin={isMobile ? 5 : 10}
+              minTickGap={isMobile ? 15 : 5} // Força espaçamento entre as datas no mobile
             />
             <YAxis
               allowDecimals={false}
-              tick={{ fontSize: 12, fill: "#64748b" }}
+              tick={{ fontSize: isMobile ? 10 : 12, fill: "#64748b" }}
+              width={isMobile ? 30 : 40} // Eixo Y mais fino no mobile
             />
             <Tooltip
               contentStyle={{
@@ -77,8 +112,12 @@ export function CurvaEpidemica({ pacientes }) {
               name="Casos Notificados"
               stroke="#e11d48"
               strokeWidth={3}
-              dot={{ r: 4, strokeWidth: 2, fill: "#fff" }}
-              activeDot={{ r: 6, strokeWidth: 0, fill: "#e11d48" }}
+              dot={{ r: isMobile ? 3 : 4, strokeWidth: 2, fill: "#fff" }}
+              activeDot={{
+                r: isMobile ? 5 : 6,
+                strokeWidth: 0,
+                fill: "#e11d48",
+              }}
             />
           </LineChart>
         </ResponsiveContainer>
@@ -88,6 +127,16 @@ export function CurvaEpidemica({ pacientes }) {
 }
 
 export function StatusDonut({ pacientes }) {
+  // 1. Adicionamos o hook para detectar mobile
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize(); // Executa na primeira renderização
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const data = useMemo(() => {
     let confirmado = 0,
       alarme = 0,
@@ -122,22 +171,27 @@ export function StatusDonut({ pacientes }) {
   }, [pacientes]);
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col h-full">
+    // Ajustado padding e overflow para mobile
+    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-4 md:p-6 flex flex-col h-full w-full overflow-hidden">
       <div className="mb-2">
         <h3 className="text-lg font-bold text-slate-800">Status dos Casos</h3>
         <p className="text-sm text-slate-500">
           Proporção da classificação final
         </p>
       </div>
-      <div className="flex-1 min-h-62.5 relative -mt-20">
+      {/* 2. Reduzimos a margem negativa no mobile para não cortar o gráfico */}
+      <div
+        className={`flex-1 min-h-[250px] md:min-h-62.5 relative ${isMobile ? "-mt-8" : "-mt-20"}`}
+      >
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={60}
-              outerRadius={80}
+              // 3. Deixamos o círculo um pouco menor em telas pequenas
+              innerRadius={isMobile ? 50 : 60}
+              outerRadius={isMobile ? 70 : 80}
               paddingAngle={2}
               dataKey="value"
               stroke="none"
@@ -156,18 +210,22 @@ export function StatusDonut({ pacientes }) {
             />
           </PieChart>
         </ResponsiveContainer>
-        {/* Legenda Customizada */}
-        <div className="flex flex-wrap justify-center gap-3 -mt-18.75 ">
+        {/* Legenda Customizada com espaçamentos corrigidos pro mobile */}
+        <div
+          className={`flex flex-wrap justify-center gap-2 md:gap-3 ${isMobile ? "-mt-14" : "-mt-18.75"} pb-2`}
+        >
           {data.map((item, idx) => (
             <div
               key={idx}
               className="flex items-center gap-1.5 text-xs font-medium text-slate-600"
             >
               <span
-                className="size-3 rounded-full"
+                className="size-3 rounded-full flex-shrink-0"
                 style={{ backgroundColor: item.color }}
               ></span>
-              {item.name} ({item.value})
+              <span className="truncate">
+                {item.name} ({item.value})
+              </span>
             </div>
           ))}
         </div>

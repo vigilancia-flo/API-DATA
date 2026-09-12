@@ -11,17 +11,20 @@ import {
   Menu,
 } from "lucide-react";
 import AssinaturaGovernamental from "../assets/AssinaturaGovernoFederal.png";
-import PatientModal from "../components/Modal/PatientModal.jsx";
+import PatientModal from "../components/Dashboard/Dengue/Modal/PatientModal.jsx";
 import {
   CurvaEpidemica,
   StatusDonut,
   PerfilDemografico,
-} from "../components/Modal/DashboardCharts.jsx";
+} from "../components/Dashboard/Dengue/Modal/DashboardCharts.jsx";
 
 // Importando os novos subcomponentes modularizados
-import KpisGrid from "../components/Dashboard/KpisGrid.jsx";
-import DistribuicaoQuadrante from "../components/Dashboard/DistribuicaoQuadrante.jsx";
-import CasosRecentes from "../components/Dashboard/CasosRecentes.jsx";
+import KpisGrid from "../components/Dashboard/Dengue/KpisGrid.jsx";
+import DistribuicaoQuadrante from "../components/Dashboard/Dengue/DistribuicaoQuadrante.jsx";
+import CasosRecentes from "../components/Dashboard/Dengue/CasosRecentes.jsx";
+
+import DashboardSifilis from "./DashboardSifilis.jsx";
+import DashboardTuberculose from "./DashBoardTuberculose.jsx";
 
 // Dicionário de endemias para o filtro (Aqui você adiciona as futuras)
 const ENDEMIAS = [
@@ -245,36 +248,39 @@ export default function Dashboard() {
             </div>
           ) : (
             <>
-              {/* KPIs Modularizados */}
-              <KpisGrid kpis={kpis} />
-
-              {/* Gráficos Recharts */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 overflow-hidden w-full">
-                  <CurvaEpidemica pacientes={pacientes} />
-                </div>
-                <div className="lg:col-span-1 overflow-hidden w-full">
-                  <StatusDonut pacientes={pacientes} />
-                </div>
-              </div>
-
-              {/* Terceira Linha */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-1 overflow-hidden w-full">
-                  <PerfilDemografico pacientes={pacientes} />
-                </div>
-
-                {/* Componentes Modularizados */}
-                <DistribuicaoQuadrante distribuicaoUbs={distribuicaoUbs} />
-
-                <CasosRecentes
-                  casos={casosRecentes}
-                  onSelectPaciente={(paciente) => {
-                    setPacienteSelecionado(paciente);
-                    setModalAberto(true);
-                  }}
-                />
-              </div>
+              {endemiaSelecionada.id === "sifilis" ? (
+                // Renderiza o dashboard específico de Sífilis
+                <DashboardSifilis pacientes={pacientes} />
+              ) : endemiaSelecionada.id === "tuberculose" ? (
+                // Renderiza o dashboard específico de Tuberculose
+                <DashboardTuberculose pacientes={pacientes} />
+              ) : (
+                // Renderiza o layout padrão (Dengue)
+                <>
+                  <KpisGrid kpis={kpis} />
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="lg:col-span-2 overflow-hidden w-full">
+                      <CurvaEpidemica pacientes={pacientes} />
+                    </div>
+                    <div className="lg:col-span-1 overflow-hidden w-full">
+                      <StatusDonut pacientes={pacientes} />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="lg:col-span-1 overflow-hidden w-full">
+                      <PerfilDemografico pacientes={pacientes} />
+                    </div>
+                    <DistribuicaoQuadrante distribuicaoUbs={distribuicaoUbs} />
+                    <CasosRecentes
+                      casos={casosRecentes}
+                      onSelectPaciente={(paciente) => {
+                        setPacienteSelecionado(paciente);
+                        setModalAberto(true);
+                      }}
+                    />
+                  </div>
+                </>
+              )}
             </>
           )}
         </main>
