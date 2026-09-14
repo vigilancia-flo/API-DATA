@@ -1971,12 +1971,15 @@ export default function MapDengue() {
   const extrairBairro = (endereco) => {
     if (!endereco) return "";
     const partes = endereco.split(",");
-    if (partes.length === 1) return "";
 
     let bairroStr = partes[partes.length - 1].trim();
-    // Se a última parte for número (CEP), pega a penúltima (Bairro)
-    if (/^[0-9-]+$/.test(bairroStr) && partes.length > 2) {
+
+    // Se a última parte for um número/CEP, pegamos a penúltima (>= 2 garante que não quebre em strings curtas)
+    if (/^[0-9-]+$/.test(bairroStr) && partes.length >= 2) {
       bairroStr = partes[partes.length - 2].trim();
+    } else if (/^[0-9-]+$/.test(bairroStr)) {
+      // Se for apenas o CEP sem o bairro, retornamos vazio para não sujar o mapa
+      return "";
     }
 
     return bairroStr
@@ -2044,11 +2047,6 @@ export default function MapDengue() {
       MELADAO: "AREA DA UBS PEDRO SIMPLICIO",
       VIAZUL: "AREA UBS RAIMUNDO FILHO",
       "PEDRO SIMPLICIO": "AREA DA UBS PEDRO SIMPLICIO",
-
-      // --- CEPS SOLTOS ---
-      64800280: "AREA UBS HELVIDIO DE HOLANDA BARROS", // CORREÇÃO: Removido os acentos
-      64800850: "AREA UBS DIRCEU ARCOVERDE",
-      64800000: "AREA UBS FLORIANO",
     };
 
     const contagemPorArea = {};

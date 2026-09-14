@@ -18,28 +18,20 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import CasosRecentes from "@/components/Dashboard/Dengue/CasosRecentes";
+import DistribuicaoQuadrante from "@/components/Dashboard/Dengue/DistribuicaoQuadrante";
 
 const COLORS = ["#8b5cf6", "#d946ef", "#f43f5e", "#0ea5e9"];
 
-// Função para mascarar o nome do paciente (Proteção LGPD)
-const anonimizarNome = (nome) => {
-  if (!nome) return "Paciente N/I";
-  const partes = nome.trim().split(/\s+/);
-  // Se for só um nome, pega as 2 primeiras letras e põe asteriscos
-  if (partes.length === 1) return `${partes[0].substring(0, 2)}***`;
-  // Se for nome composto, transforma em iniciais (Ex: "RN REGIA" -> "R. R.")
-  return partes.map((p) => `${p[0].toUpperCase()}.`).join(" ");
-};
-
-export default function DashboardSifilis({ pacientes }) {
+export default function DashboardSifilis({ pacientes, distribuicaoUbs }) {
   // 1. Processamento de KPIs
   const totalCasos = pacientes.length;
-
   const casosCongenita = pacientes.filter((p) =>
     p.id_agravo?.toUpperCase().includes("A50"),
   ).length;
 
-  const bairrosAfetados = new Set(pacientes.map((p) => p.nm_ubs)).size;
+  const bairrosAfetados = new Set(pacientes.map((p) => p.nm_ubs || p.un_saude))
+    .size;
 
   // 2. Processamento para Gráfico de Rosca (Tipos de Sífilis por CID)
   const dadosTiposSifilis = useMemo(() => {
@@ -81,10 +73,22 @@ export default function DashboardSifilis({ pacientes }) {
     }));
   }, [pacientes]);
 
-  // 4. Casos Recentes (Tabela)
-  const casosRecentes = [...pacientes]
+  // 4. Casos Recentes formatados para o componente
+  const casosRecentesFormatados = [...pacientes]
     .sort((a, b) => new Date(b.dt_notific) - new Date(a.dt_notific))
-    .slice(0, 6);
+    .slice(0, 5)
+    .map((paciente) => {
+      const isCongenita = paciente.id_agravo?.toUpperCase().includes("A50");
+      const statusCor = isCongenita ? "bg-rose-500" : "bg-purple-500";
+
+      return {
+        name: `Notificação #${paciente.nu_notific || "S/N"}`,
+        condition: `CID: ${paciente.id_agravo || "N/I"} | Data: ${paciente.dt_notific || "-"}`,
+        ubs: `UBS: ${paciente.nm_ubs || paciente.un_saude || "Não informada"}`,
+        corClassificacao: statusCor,
+        dadosOriginais: paciente,
+      };
+    });
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-in fade-in duration-500">
@@ -122,9 +126,8 @@ export default function DashboardSifilis({ pacientes }) {
         />
       </div>
 
-      {/* Linha 2: Gráficos Principais */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        {/* Gráfico de Linha - Evolução */}
+      {/* Linha 2: Gráfico de Curva e Distribuição por UBS */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
         <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6">
           <h3 className="text-base sm:text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
             <Activity className="size-5 text-purple-600" /> Curva de
@@ -176,7 +179,21 @@ export default function DashboardSifilis({ pacientes }) {
           </div>
         </div>
 
-        {/* Gráfico de Rosca - Tipos Clínicos */}
+        {/* Componente de Distribuição */}
+        <DistribuicaoQuadrante distribuicaoUbs={distribuicaoUbs} />
+      </div>
+
+      {/* LINHA 3: Casos Recentes + Gráfico de Rosca */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6 flex flex-col">
+          <CasosRecentes
+            casos={casosRecentesFormatados}
+            onSelectPaciente={(paciente) => {
+              console.log("Abrir paciente:", paciente);
+            }}
+          />
+        </div>
+
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6 flex flex-col">
           <h3 className="text-base sm:text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
             <AlertCircle className="size-5 text-purple-600" /> Classificação
@@ -227,75 +244,11 @@ export default function DashboardSifilis({ pacientes }) {
           </div>
         </div>
       </div>
-
-      {/* Linha 3: Lista de Casos Recentes (Anonimizada) */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6 w-full overflow-hidden">
-        <h3 className="text-base sm:text-lg font-bold text-slate-800 mb-4">
-          Últimos Pacientes Registrados
-        </h3>
-        <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
-          <table className="w-full text-left text-sm text-slate-600 min-w-[600px]">
-            <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-100">
-              <tr>
-                <th className="px-4 py-3 font-semibold whitespace-nowrap">
-                  Data Notificação
-                </th>
-                <th className="px-4 py-3 font-semibold whitespace-nowrap">
-                  Unidade (UBS)
-                </th>
-                <th className="px-4 py-3 font-semibold whitespace-nowrap">
-                  CID (Agravo)
-                </th>
-                <th className="px-4 py-3 font-semibold rounded-tr-lg whitespace-nowrap">
-                  Nº Notificação
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {casosRecentes.map((caso, idx) => (
-                <tr
-                  key={idx}
-                  className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors"
-                >
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    {caso.dt_notific || "-"}
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    <span className="bg-slate-100 text-slate-700 px-2 py-1 rounded-md text-xs font-medium border border-slate-200 inline-block">
-                      {caso.nm_ubs || "Não informada"}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 whitespace-nowrap">
-                    <span
-                      className={`px-2 py-1 rounded-md text-xs font-bold inline-block ${caso.id_agravo?.includes("A50") ? "bg-rose-100 text-rose-700" : "bg-purple-100 text-purple-700"}`}
-                    >
-                      {caso.id_agravo || "-"}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-slate-400 whitespace-nowrap">
-                    #{caso.nu_notific}
-                  </td>
-                </tr>
-              ))}
-              {casosRecentes.length === 0 && (
-                <tr>
-                  <td
-                    colSpan="5"
-                    className="px-4 py-8 text-center text-slate-400"
-                  >
-                    Nenhum registro encontrado.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   );
 }
 
-// Subcomponente de KPI para manter o código limpo
+// Subcomponente de KPI
 function KpiCard({ title, value, icon: Icon, color, bgLight, subtitle }) {
   return (
     <div className="bg-white p-4 sm:p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3 sm:gap-4 transition-transform hover:-translate-y-1 duration-300">
