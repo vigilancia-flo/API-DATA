@@ -14,13 +14,14 @@ import {
   StatusDonut,
   PerfilDemografico,
 } from "../components/Dashboard/Dengue/Modal/DashboardCharts.jsx";
-
 import KpisGrid from "../components/Dashboard/Dengue/KpisGrid.jsx";
 import DistribuicaoQuadrante from "../components/Dashboard/Dengue/DistribuicaoQuadrante.jsx";
 import CasosRecentes from "../components/Dashboard/Dengue/CasosRecentes.jsx";
-
 import DashboardSifilis from "./DashboardSifilis.jsx";
 import DashboardTuberculose from "./DashBoardTuberculose.jsx";
+
+// Importando o novo componente
+import EndemiaSelector from "../components/EndemiasSelector.jsx";
 
 const ENDEMIAS = [
   { id: "dengue", nome: "Dengue", endpoint: "/api/dengue/" },
@@ -75,7 +76,6 @@ export default function Dashboard() {
   useEffect(() => {
     setLoading(true);
     const baseUrl = import.meta.env.VITE_API_URL;
-
     fetch(`${baseUrl}${endemiaSelecionada.endpoint}`)
       .then((response) => {
         if (!response.ok)
@@ -98,7 +98,6 @@ export default function Dashboard() {
     if (!endereco) return "";
     const partes = endereco.split(",");
     let bairroStr = partes[partes.length - 1].trim();
-
     if (/^[0-9-]+$/.test(bairroStr) && partes.length >= 2) {
       bairroStr = partes[partes.length - 2].trim();
     } else if (/^[0-9-]+$/.test(bairroStr)) {
@@ -114,7 +113,6 @@ export default function Dashboard() {
     if (!endereco) return "Não informado";
     const partes = endereco.split(",");
     let bairroStr = partes[partes.length - 1].trim();
-
     if (/^[0-9-]+$/.test(bairroStr) && partes.length >= 2) {
       bairroStr = partes[partes.length - 2].trim();
     } else if (/^[0-9-]+$/.test(bairroStr)) {
@@ -139,7 +137,6 @@ export default function Dashboard() {
     .slice(0, 5)
     .map((paciente) => {
       const bairro = extrairBairroVisual(paciente.endereco);
-
       let ubsTag = "";
       if (endemiaSelecionada.id === "dengue") {
         ubsTag =
@@ -148,7 +145,6 @@ export default function Dashboard() {
       } else {
         ubsTag = paciente.nm_ubs || paciente.un_saude || "Não informada";
       }
-
       const classFinal = String(paciente.classi_fin || "").trim();
       let statusCor = "bg-amber-500";
       if (classFinal === "10" || classFinal === "11") statusCor = "bg-rose-600";
@@ -167,7 +163,6 @@ export default function Dashboard() {
   // Distribuição Inteligente: Dengue por Mapa, Outras por API
   const contagemUbs = pacientes.reduce((acc, paciente) => {
     let ubs = "Não Informada";
-
     if (endemiaSelecionada.id === "dengue") {
       const bairroNormalizado = obterBairroNormalizado(paciente.endereco);
       ubs = BAIRRO_PARA_UBS[bairroNormalizado] || "Outras Regiões";
@@ -175,7 +170,6 @@ export default function Dashboard() {
       const nomeAPI = paciente.nm_ubs || paciente.un_saude;
       if (nomeAPI) ubs = nomeAPI;
     }
-
     acc[ubs] = (acc[ubs] || 0) + 1;
     return acc;
   }, {});
@@ -205,11 +199,12 @@ export default function Dashboard() {
           contagemUbs[a] > contagemUbs[b] ? a : b,
         )
       : "Nenhuma";
-  const ubsMaisAfetadaValor = contagemUbs[ubsMaisAfetadaNome] || 0;
 
+  const ubsMaisAfetadaValor = contagemUbs[ubsMaisAfetadaNome] || 0;
   const hoje = new Date();
   const seteDiasAtras = new Date();
   seteDiasAtras.setDate(hoje.getDate() - 7);
+
   const casosUltimos7Dias = pacientes.filter((p) => {
     const dt = p.data_notificacao || p.dt_notific;
     if (!dt) return false;
@@ -290,21 +285,12 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <div className="flex items-center gap-3 bg-slate-100 p-1 rounded-lg">
-              {ENDEMIAS.map((endemia) => (
-                <button
-                  key={endemia.id}
-                  onClick={() => setEndemiaSelecionada(endemia)}
-                  className={`px-4 py-2 text-sm font-bold rounded-md transition-colors ${
-                    endemiaSelecionada.id === endemia.id
-                      ? "bg-white text-[#054060] shadow-sm border border-slate-200"
-                      : "text-slate-500 hover:text-slate-700"
-                  }`}
-                >
-                  {endemia.nome}
-                </button>
-              ))}
-            </div>
+            {/* O SELETOR EXTRAÍDO AGORA ESTÁ AQUI 👇 */}
+            <EndemiaSelector
+              options={ENDEMIAS}
+              value={endemiaSelecionada}
+              onChange={setEndemiaSelecionada}
+            />
           </div>
 
           {loading ? (
